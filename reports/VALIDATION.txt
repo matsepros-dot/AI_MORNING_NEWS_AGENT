@@ -1,0 +1,108 @@
+AI_MORNING_NEWS_AGENT V1
+
+TRẠNG THÁI: PASS
+Ngày kiểm tra: 06/10/2026, giờ Việt Nam (UTC+07:00)
+
+Project:
+D:\01_WORKSPACE\02_PROJECTS\02_FINAL\AI_MORNING_NEWS_AGENT
+
+Python: 3.14.7
+Git: 2.53.0.windows.3
+Virtualenv: .venv; dependency import PASS; pip check PASS
+Repo: https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT
+Website: GitHub Pages HTTP 200; bản tin ngày 06/10/2026; 12 card; deployment success
+Scheduler: AI_MORNING_NEWS_AGENT_0700; Daily 07:00; enabled; StartWhenAvailable; IgnoreNew; giới hạn 20 phút
+Scheduler chạy thử thực tế: 06/10/2026 09:47:45; LastTaskResult=0; fetch/render/history/commit/push PASS
+Scheduler lần kế tiếp: 07/10/2026 07:00, giờ máy Windows
+Task dùng tài khoản PTM khi đã đăng nhập Windows; máy cần có mạng. Không lưu password trong task.
+
+Sources hoạt động:
+- VnExpress — Kinh doanh: 60 bài
+- VnExpress — Thời sự: 60 bài
+- VnExpress — Thế giới: 60 bài
+- VnExpress — Công nghệ: 60 bài
+- 24H — Tài chính: 24 bài
+- VnEconomy — Tin mới: 50 bài
+- VnEconomy — Tài chính: 50 bài
+- Báo Chính phủ: 50 bài
+
+Sources lỗi/bỏ qua:
+- Bộ Tài chính, Cơ quan Thuế, Ngân hàng Nhà nước, Cục Thống kê: disabled vì chưa xác minh RSS công khai ổn định
+- Reuters: disabled vì chưa xác minh feed miễn phí công khai
+- Endpoint thử ban đầu 24H 403, VnEconomy/Chính phủ 404: đã sửa sang endpoint RSS do chính báo công bố; cả 8 feed đang hoạt động
+
+Số bài thu thập: 414
+Số bài trong 24 giờ: 179
+Số bài sau lọc/dedup/history: 171
+Số bài xuất bản: 12
+Phân nhóm: Tài chính – Kế toán 6; Kinh tế – Doanh nghiệp 2; Tin nóng 4
+Số liệu trên lấy từ lần chạy Scheduler thành công; thay đổi theo thời gian nguồn cập nhật.
+
+[PASS] INSTALL.cmd
+[PASS] RUN_AGENT.cmd
+[PASS] Fetch real news
+[PASS] Normalize
+[PASS] Deduplicate
+[PASS] Classify
+[PASS] Score
+[PASS] Render index.html
+[PASS] Archive
+[PASS] History
+[PASS] Logging
+[PASS] Git commit/push
+[PASS] GitHub Pages updated
+[PASS] Task Scheduler 07:00
+
+Kiểm thử bổ sung:
+- 11 unittest/integration PASS; compileall PASS; pip check PASS
+- Nguồn chết, timeout, 0 bài: tiếp tục các nguồn còn lại, ghi log
+- Toàn bộ nguồn mất Internet: lỗi mạng được mô phỏng tại HTTP requests; exit 1, website/archive/history giữ nguyên
+- Thiếu ngày: dùng fetched_at để xét lọc, giảm điểm, hiển thị chưa có ngày nguồn
+- Thiếu description: không bịa mô tả; HTML/script được loại; URL javascript bị từ chối
+- Phân loại có đủ ba nhóm; giữ dấu tiếng Việt để phân biệt thuê/thuế; keyword AI không match chữ Hai
+- Trùng URL, tiêu đề chuẩn hóa/fuzzy: loại đúng; ưu tiên nguồn chính thống; khác số/nội dung vẫn giữ
+- Chạy nhiều lần cùng ngày: chỉ một file archive ngày, history không nhân bản
+- Retention history 45 ngày; history lỗi không bị ghi đè
+- Git repository bare cục bộ thật: commit/push PASS; NO CHANGES không tạo commit mới; fake KEY.txt không được stage
+- Git push lỗi trả PARTIAL, dữ liệu vẫn giữ; GitHub push thực tế đã PASS sau đăng nhập GCM
+- Kiểm tra publisher NO CHANGES trên repository thật và push origin main thành công
+- Chạy launcher từ thư mục TEMP: PASS; không phụ thuộc current directory
+- Task chạy thật từ Windows: tìm được Git qua config/runtime.json, dùng GCM hiện có, exit 0
+- UI browser mobile 390px, tablet 768px, desktop 1280px: không tràn ngang; 12 card; archive/link ngày hoạt động
+- GitHub Pages workflow pages build and deployment: success; website public được kiểm tra bằng HTTP và trình duyệt
+
+Các lỗi môi trường đã sửa:
+- Git HTTPS helper không chạy trong sandbox: dùng môi trường Windows được cấp quyền cho fetch/install/publish
+- Git Credential Manager browser flow mặc định kẹt: đăng nhập lại bằng --browser --no-ui thành công
+- Git thiếu trong PATH của Task Scheduler: INSTALL.cmd ghi đường dẫn Git vào config/runtime.json cục bộ
+- Preview server ở project root bị auto-review từ chối vì có KEY.txt: dùng thư mục preview riêng chỉ chứa HTML/CSS
+
+An toàn:
+- Không dùng OpenAI API hoặc dịch vụ trả phí
+- Không đọc/tìm key trên máy; KEY.txt hiện có được giữ nguyên và không theo dõi bởi Git
+- Publisher dùng danh sách đường dẫn cho phép; không commit logs, venv, env, backup, cache hoặc runtime config
+- Index gốc giữ trong Git history và backup/index_initial.html
+- Chỉ dùng RSS công khai; không login vào nguồn tin, không vượt CAPTCHA, không copy toàn bộ bài báo
+
+File chính:
+RUN_AGENT.cmd
+INSTALL.cmd
+CONNECT_GITHUB.cmd
+config\config.json
+config\runtime.json (đường dẫn Git cục bộ; không commit)
+logs\agent.log
+data\run_report.json (thống kê runtime; không commit)
+scheduler\install_task.ps1
+scheduler\AI_MORNING_NEWS_AGENT_0700.xml (cục bộ; không commit)
+
+CÁCH CHẠY:
+Double-click RUN_AGENT.cmd
+
+URL:
+https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
+
+CÁC LỖI CÒN LẠI:
+Không có lỗi bắt buộc còn lại. Những nguồn chưa có RSS đã xác minh đang được bỏ qua có ghi log.
+
+HÀNH ĐỘNG DUY NHẤT NGƯỜI DÙNG CẦN LÀM:
+Không. Để máy có mạng và đăng nhập Windows để task chạy hằng ngày.
