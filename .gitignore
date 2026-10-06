@@ -12,5 +12,6 @@ KEY.txt
 data/run_report.json
 data/publish_pending.json
 .pytest_cache/
+config/runtime.json
 backup/
 scheduler/*.xml

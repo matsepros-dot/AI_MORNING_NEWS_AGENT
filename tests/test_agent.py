@@ -17,7 +17,7 @@ from src.deduplicator import deduplicate
 from src.history import load_history, update_history, unseen
 from src.fetcher import fetch_sources
 from src.main import run
-from src.publisher import publish
+from src.publisher import publish, git
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = json.loads((ROOT / 'config/config.json').read_text(encoding='utf-8'))
@@ -158,6 +158,32 @@ class AgentTests(unittest.TestCase):
         with patch('src.publisher.git', side_effect=unsafe) as mocked:
             self.assertFalse(publish(self.root, LOGGER, CONFIG))
         self.assertNotIn('commit', [call.args[1] for call in mocked.call_args_list])
+
+    def test_real_git_publish_twice_and_secret_exclusion(self):
+        remote = self.root / 'remote.git'
+        git(self.root, 'init', '--bare', str(remote))
+        repository = self.root / 'checkout'
+        repository.mkdir()
+        git(repository, 'init', '-b', 'main')
+        git(repository, 'config', 'user.name', 'Agent Test')
+        git(repository, 'config', 'user.email', 'test@example.invalid')
+        git(repository, 'remote', 'add', 'origin', str(remote))
+        (repository / 'index.html').write_text('test news', encoding='utf-8')
+        (repository / 'KEY.txt').write_text('test-only sentinel', encoding='utf-8')
+        config = copy.deepcopy(CONFIG)
+        config['publish']['remote'] = str(remote)
+        self.assertTrue(publish(repository, LOGGER, config))
+        head = git(repository, 'rev-parse', 'HEAD')
+        with self.assertLogs(LOGGER, level='INFO') as captured:
+            self.assertTrue(publish(repository, LOGGER, config))
+        self.assertTrue(any('NO CHANGES' in message for message in captured.output))
+        self.assertEqual(head, git(repository, 'rev-parse', 'HEAD'))
+        self.assertEqual(git(repository, 'ls-files'), 'index.html')
+        self.assertEqual(git(repository, 'rev-parse', 'origin/main'), head)
+        invalid_remote = str(self.root / 'missing.git')
+        git(repository, 'remote', 'set-url', 'origin', invalid_remote)
+        config['publish']['remote'] = invalid_remote
+        self.assertFalse(publish(repository, LOGGER, config))
 
 
 if __name__ == '__main__':

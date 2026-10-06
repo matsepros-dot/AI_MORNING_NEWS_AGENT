@@ -1,5 +1,7 @@
 import subprocess
 import os
+from pathlib import Path
+from .runtime import git_executable
 
 # Explicit allowlist: never stage arbitrary local files such as KEY.txt.
 TRACKED_PATHS = ['.gitignore', '.nojekyll', 'requirements.txt', 'INSTALL.cmd', 'RUN_AGENT.cmd',
@@ -10,7 +12,9 @@ TRACKED_PATHS = ['.gitignore', '.nojekyll', 'requirements.txt', 'INSTALL.cmd', '
 def git(root, *args):
     environment = os.environ.copy()
     environment.update(GIT_TERMINAL_PROMPT='0', GCM_INTERACTIVE='never')
-    process = subprocess.Popen(['git', *args], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    executable = git_executable(root)
+    environment['PATH'] = str(Path(executable).parent) + os.pathsep + environment.get('PATH', '')
+    process = subprocess.Popen([executable, *args], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                text=True, encoding='utf-8', errors='replace', env=environment)
     try:
         stdout, stderr = process.communicate(timeout=120)

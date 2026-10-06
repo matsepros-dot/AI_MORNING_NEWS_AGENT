@@ -3,8 +3,7 @@ setlocal
 cd /d "%~dp0"
 where python >nul 2>&1 || goto fail
 python --version || goto fail
-where git >nul 2>&1 || goto fail
-git --version || goto fail
+python src\runtime.py --configure || goto fail
 if not exist ".venv\Scripts\python.exe" python -m venv .venv
 if not exist ".venv\Scripts\python.exe" goto fail
 ".venv\Scripts\python.exe" -m pip install --upgrade pip || goto fail
