@@ -4,7 +4,7 @@ from pathlib import Path
 from .runtime import git_executable
 
 # Explicit allowlist: never stage arbitrary local files such as KEY.txt.
-TRACKED_PATHS = ['.gitignore', '.nojekyll', 'requirements.txt', 'INSTALL.cmd', 'RUN_AGENT.cmd',
+TRACKED_PATHS = ['.gitignore', '.nojekyll', 'requirements.txt', 'INSTALL.cmd', 'RUN_AGENT.cmd', 'CONNECT_GITHUB.cmd',
                  'README.md', 'config', 'src', 'templates', 'static', 'index.html',
                  'archive', 'data/history.json', 'tests', 'scheduler/install_task.ps1', 'reports']
 

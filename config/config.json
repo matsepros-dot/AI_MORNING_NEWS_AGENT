@@ -15,7 +15,7 @@
   "user_agent": "AI-Morning-News-Agent/1.0 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
   "scheduler_time": "07:00",
   "output_paths": {"index": "index.html", "archive": "archive", "history": "data/history.json", "log": "logs/agent.log"},
-  "publish": {"remote": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT.git", "branch": "main"},
+  "publish": {"remote": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT.git", "branch": "main", "account": "matsepros-dot"},
   "scoring_weights": {"source_priority": 4, "freshness": 20, "keyword_importance": 3, "keyword_count": 2, "category_relevance": 5, "description": 3, "title_quality": 2, "missing_date_penalty": 15},
   "priority_thresholds": {"high": 65, "medium": 45},
   "keyword_importance": {"thuế": 3, "hóa đơn điện tử": 4, "kế toán": 4, "kiểm toán": 3, "lãi suất": 3, "tỷ giá": 3, "chính sách": 2},

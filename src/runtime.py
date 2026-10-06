@@ -1,5 +1,6 @@
 """Resolve the installed Git for double-click and Task Scheduler environments."""
 import json
+import argparse
 import os
 import shutil
 import subprocess
@@ -22,8 +23,18 @@ def git_executable(root):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--configure', action='store_true')
+    parser.add_argument('--login', action='store_true')
+    args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     executable = git_executable(root)
+    if args.login:
+        config = json.loads((root / 'config/config.json').read_text(encoding='utf-8'))
+        environment = os.environ.copy()
+        environment['PATH'] = str(Path(executable).parent) + os.pathsep + environment.get('PATH', '')
+        raise SystemExit(subprocess.call([executable, 'credential-manager', 'github', 'login',
+                                        '--username', config['publish']['account'], '--browser'], env=environment))
     subprocess.run([executable, '--version'], check=True)
     (root / 'config').mkdir(exist_ok=True)
     (root / 'config/runtime.json').write_text(json.dumps({'git_executable': executable}, indent=2) + '\n', encoding='utf-8')
