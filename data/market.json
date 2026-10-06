@@ -34,22 +34,22 @@
   },
   {
     "label": "Bitcoin",
-    "value": 85501.0,
-    "change": -1.0884316556429696,
+    "value": 85499.0,
+    "change": -1.0903634516727916,
     "unit": "USD",
     "kind": "crypto",
-    "updated_at": "2026-10-06T03:25:50+00:00",
+    "updated_at": "2026-10-06T03:26:30+00:00",
     "source": "CoinGecko",
     "url": "https://api.coingecko.com/api/v3/simple/price",
     "stale": false
   },
   {
     "label": "Ethereum",
-    "value": 2699.62,
-    "change": -0.9630706011265533,
+    "value": 2699.5,
+    "change": -0.9847540346491898,
     "unit": "USD",
     "kind": "crypto",
-    "updated_at": "2026-10-06T03:25:40+00:00",
+    "updated_at": "2026-10-06T03:26:30+00:00",
     "source": "CoinGecko",
     "url": "https://api.coingecko.com/api/v3/simple/price",
     "stale": false
