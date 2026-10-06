@@ -1,0 +1,12 @@
+RESULT: PASS
+Change: two daily GitHub schedules at 08:00 and 13:30 Asia/Ho_Chi_Minh.
+Cron UTC: 0 1 * * *; 30 6 * * *.
+UI: planned schedule and actual render time after source fetching; timezone UTC+07:00.
+Local tests: 24/24 PASS.
+Local real-source pipeline: PASS, 40 selected items.
+Local main/daily archive HTML: schedule present; timestamp lies between run start/end.
+GitHub Actions: https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37449007035
+Cloud: Tests, Update live information, Commit and push generated files all success.
+Cloud generated commit: 6c9799d70daa9995c1210593730a73c7c0fb04c5.
+Scheduled runs at future clock times have not yet occurred; GitHub may delay execution.
+Windows scheduler remains disabled/deprecated. No paid services added.
