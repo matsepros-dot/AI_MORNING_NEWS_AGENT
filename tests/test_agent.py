@@ -105,15 +105,17 @@ class AgentTests(unittest.TestCase):
         rows[0] = (dict(title='Thuế và hóa đơn điện tử', link='https://example.org/tax'), CONFIG['sources'][0])
         rows[1] = (entry(title='Bão mạnh trên thế giới', url='https://example.org/storm'), CONFIG['sources'][1])
         rows.append((dict(entry(), published=(NOW - timedelta(hours=26)).isoformat()), CONFIG['sources'][0]))
-        with patch('src.main.fetch_sources', return_value=(rows, [])):
-            self.assertEqual(run(self.root, CONFIG, LOGGER, True), 0)
-            self.assertEqual(run(self.root, CONFIG, LOGGER, True), 0)
+        config = copy.deepcopy(CONFIG)
+        config['section_max_items'] = 20
+        with patch('src.main.fetch_sources', return_value=(rows, [{'name':'test','status':'OK'}])), patch('src.main.fetch_markets', return_value=([], [])):
+            self.assertEqual(run(self.root, config, LOGGER, True), 0)
+            self.assertEqual(run(self.root, config, LOGGER, True), 0)
         history = load_history(self.root / 'data/history.json')
-        self.assertEqual(len(history), 12)
+        self.assertEqual(len(history), 13)
         self.assertEqual(len(list((self.root / 'archive').glob('????-??-??.html'))), 1)
-        self.assertEqual({x['category'] for x in history}, set(CONFIG['keywords']))
+        self.assertEqual({x['category'] for x in history}, {'finance_accounting','economy_business','hot_news'})
         soup = BeautifulSoup((self.root / 'index.html').read_text(encoding='utf-8'), 'html.parser')
-        self.assertEqual(len(soup.select('.news-card')), 12)
+        self.assertEqual(len(soup.select('.news-card')), 13)
         for link in soup.select('a[target]'):
             self.assertEqual(set(link['rel']), {'noopener', 'noreferrer'})
         self.assertIsNotNone(soup.find('meta', attrs={'name': 'viewport'}))

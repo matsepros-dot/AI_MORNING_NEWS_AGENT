@@ -1,16 +1,18 @@
-# AI_MORNING_NEWS_AGENT V1
+# AI_MORNING_NEWS_AGENT V1.1
 
-Bản tin sáng miễn phí từ RSS công khai. Không dùng OpenAI API, không tạo tóm tắt bằng AI. Python 3.10+ và Git có Git Credential Manager là đủ.
+Trang thông tin sống chạy trên GitHub Actions miễn phí: nguồn công khai → phân loại / pháp lý / độ mới / gộp chủ đề → HTML + snapshot + history → commit/push main → GitHub Pages. Không dùng OpenAI API hoặc dịch vụ trả phí. Không cần bật máy cá nhân.
 
-1. **Cài lần đầu:** double-click `INSTALL.cmd`. Cài dependency vào `.venv`.
-2. **Chạy manual:** double-click `RUN_AGENT.cmd`. Chạy từ thư mục khác cũng được. `RUN_AGENT.cmd --no-publish` chỉ tạo bản tin tại máy.
-3. **Website:** https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/ hoặc mở `index.html`. Kho ngày cũ nằm trong `archive/`.
-4. **Log:** `logs/agent.log` (xoay vòng), lỗi launcher trong `logs/launcher.log`. Thống kê lần chạy trong `data/run_report.json`.
-5. **Sửa nguồn/keyword:** `config/config.json`. Nguồn RSS/Atom dùng `name`, `url`, `priority`, `category`, `enabled`; nguồn không ổn định được bỏ qua và ghi log. Có thể chỉnh thời gian lọc, số tin, trọng số, ngưỡng loại trùng và retention history.
-6. **Scheduler:** chạy PowerShell `-ExecutionPolicy Bypass -File scheduler\install_task.ps1` để tạo/cập nhật task `AI_MORNING_NEWS_AGENT_0700`. Xem bằng Task Scheduler hoặc `Get-ScheduledTask -TaskName AI_MORNING_NEWS_AGENT_0700`. Chạy 07:00 giờ Windows, bù lịch khi có thể, tối đa 20 phút, không chạy song song. Task dùng tài khoản hiện tại khi đã đăng nhập; máy cần có mạng và phiên Windows đã đăng nhập để dùng Git Credential Manager. Nếu sửa giờ trong config, chạy lại script đăng ký.
-7. **Publish lỗi:** dữ liệu đã tạo vẫn được giữ. Nếu chưa có phiên đăng nhập Git, double-click `CONNECT_GITHUB.cmd`, hoàn tất luồng Git Credential Manager trên GitHub; script tự chạy bản tin và publish sau khi đăng nhập. Phiên Chrome đơn thuần chưa đủ để Git push; cần hoàn tất luồng xác thực GCM. Không lưu password/token vào source. Installer ghi đường dẫn Git đang dùng vào `config/runtime.json` (không commit), để Task Scheduler không phụ thuộc PATH của Codex. Nếu Git đổi vị trí, chạy lại `INSTALL.cmd`. Không tự force-push hay ghi đè thay đổi remote; nếu remote đã thay đổi cần kiểm tra và tích hợp trước.
-8. **Chạy lại cùng ngày:** chạy `RUN_AGENT.cmd` lần nữa; cập nhật cùng file ngày, không nhân bản history. URL các ngày trước bị hạn chế lặp; URL mới vẫn được xét. History giữ 45 ngày; archive vẫn giữ bản tin cũ.
+- Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
+- Chạy tay: GitHub → Actions → Morning news V1.1 → Run workflow → main. Xem từng step và log ngay trong lần chạy.
+- Lịch: `0 0 * * *` (00:00 UTC = 07:00 Asia/Ho_Chi_Minh). GitHub có thể khởi chạy trễ; đây là lịch cấu hình, không bảo đảm đúng từng phút.
+- Windows Task Scheduler cũ được ngừng dùng cho production; `scheduler/install_task.ps1` đã deprecated và không đăng ký task mới.
+- Sửa nguồn / keyword / thời gian lưu / điểm: `config/config.json`. RSS, HTML công khai và bài tham chiếu chính thống đều configurable. TVPL lỗi hoặc chặn truy cập sẽ chuyển sang nguồn Chính phủ; không vượt CAPTCHA/paywall.
+- Trang chính ưu tiên latest (24 giờ), recent (72 giờ), ongoing và reference. Tin pháp lý cũ hữu ích được giữ riêng; không suy diễn ngày hiệu lực hoặc tình trạng luật. Dữ liệu ngày không chắc chắn hiển thị chưa xác định. Tin pháp lý chưa đối chiếu chính thống không xếp ưu tiên cao.
+- Snapshot: `archive/YYYY-MM-DD.html`. History giữ tối đa 60 ngày theo lần nhìn thấy và 1.500 bản ghi; snapshot ngày trước được giữ. Giá USD/EUR/JPY từ Vietcombank, BTC/ETH từ CoinGecko public, kèm thời gian nguồn; nguồn lỗi giữ giá trước và đánh dấu cũ.
+- Local: chạy `INSTALL.cmd` lần đầu, sau đó `RUN_AGENT.cmd --no-publish` để test. `RUN_AGENT.cmd` có thể publish thủ công bằng Git Credential Manager hiện có. Kiểm thử: `.venv\Scripts\python.exe -m unittest discover -s tests -v`.
+- Publish lỗi: xem Actions step commit/push; workflow chỉ retry xung đột trong checkout tạm của runner, tải remote rồi tạo lại dữ liệu. Không force-push. Branch protection có thể chặn quyền ghi; không thêm PAT. Local cần tích hợp remote trước khi publish.
+- Pages dùng main/root. GitHub không tự build Pages khi commit do GITHUB_TOKEN; chỉ contents:write chưa đủ cho cập nhật Pages tự động. Job yêu cầu build cần pages:write riêng và chỉ được thêm khi chủ repo đồng ý. Không cần token cá nhân.
 
-Exit code: `0` PASS; `2` PARTIAL (ít hơn số tin tối thiểu, publish lỗi hoặc đang chạy); `1` FAIL. Nếu toàn bộ nguồn lỗi/không có tin mới, giữ nguyên website, archive và history. Những bài thiếu ngày được dùng giờ thu thập và giảm điểm; hiển thị rõ chưa có ngày nguồn. Description chỉ là đoạn RSS tối đa 320 ký tự. Tiêu đề gần giống nhưng khác số không bị tự gộp.
+Pipeline: exit 0 = PASS; 2 = PARTIAL; 1 = FAIL. Toàn bộ nguồn lỗi thì giữ nguyên website/history/archive. Không có tin mới vẫn dùng tin còn giá trị. No changes là thành công. Báo cáo local ở `data/run_report.json`, log xoay vòng ở `logs/agent.log`; các file này không publish. File key/.env/runtime local bị ignore và publisher dùng allowlist.
 
-Kiểm thử: `.venv\Scripts\python.exe -m unittest discover -s tests -v`. Các lỗi mạng, nguồn và publish được mô phỏng bằng mock; manual run dùng RSS thật. Không đọc hoặc đưa file key trên máy lên Git. Publisher dùng danh sách đường dẫn cho phép thay vì `git add .`.
+Giao diện dựa tone đỏ #EE0027, trắng/xám của slide mẫu, dùng Arial/Segoe UI. SVG tự tạo, thumbnail feed lazy load và fallback icon; không nhúng logo hoặc font proprietary. Mô tả ngắn từ nguồn, không viết tư vấn mua/bán hoặc kết luận pháp lý.

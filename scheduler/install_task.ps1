@@ -1,4 +1,6 @@
 $ErrorActionPreference = 'Stop'
+Write-Warning 'DEPRECATED V1: production chạy trên GitHub Actions. Script này chỉ để tham khảo, không đăng ký lại lịch local.'
+return
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $config = Get-Content -LiteralPath (Join-Path $projectRoot 'config\config.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $taskName = 'AI_MORNING_NEWS_AGENT_0700'

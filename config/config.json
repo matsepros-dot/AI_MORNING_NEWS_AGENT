@@ -2,42 +2,415 @@
   "lookback_hours": 24,
   "future_tolerance_hours": 1,
   "min_items": 8,
-  "max_items": 12,
+  "max_items": 40,
   "top_items": 3,
   "ensure_category_coverage": true,
-  "top_diversity_margin": 6,
+  "top_diversity_margin": 15,
   "description_max_chars": 320,
   "title_min_chars": 20,
   "fuzzy_duplicate_threshold": 94,
-  "history_retention_days": 45,
+  "history_retention_days": 60,
   "request_timeout": 20,
   "max_feed_bytes": 5000000,
-  "user_agent": "AI-Morning-News-Agent/1.0 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
+  "user_agent": "AI-Morning-News-Agent/1.1 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
   "scheduler_time": "07:00",
-  "output_paths": {"index": "index.html", "archive": "archive", "history": "data/history.json", "log": "logs/agent.log"},
-  "publish": {"remote": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT.git", "branch": "main", "account": "matsepros-dot"},
-  "scoring_weights": {"source_priority": 4, "freshness": 20, "keyword_importance": 3, "keyword_count": 2, "category_relevance": 5, "description": 3, "title_quality": 2, "missing_date_penalty": 15},
-  "priority_thresholds": {"high": 65, "medium": 45},
-  "keyword_importance": {"thuế": 3, "hóa đơn điện tử": 4, "kế toán": 4, "kiểm toán": 3, "lãi suất": 3, "tỷ giá": 3, "chính sách": 2},
-  "classification_weights": {"title": 3, "description": 1},
+  "output_paths": {
+    "index": "index.html",
+    "archive": "archive",
+    "history": "data/history.json",
+    "log": "logs/agent.log"
+  },
+  "publish": {
+    "remote": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT.git",
+    "branch": "main",
+    "account": "matsepros-dot"
+  },
+  "scoring_weights": {
+    "source_priority": 4,
+    "freshness": 20,
+    "keyword_importance": 3,
+    "keyword_count": 2,
+    "category_relevance": 5,
+    "description": 3,
+    "title_quality": 2,
+    "missing_date_penalty": 15,
+    "legal_relevance": 12,
+    "legal_effective_after_cutoff": 15,
+    "legal_near_effective": 10,
+    "unverified_legal_penalty": 15
+  },
+  "priority_thresholds": {
+    "high": 65,
+    "medium": 45
+  },
+  "keyword_importance": {
+    "thuế": 3,
+    "hóa đơn điện tử": 4,
+    "kế toán": 4,
+    "kiểm toán": 3,
+    "lãi suất": 3,
+    "tỷ giá": 3,
+    "chính sách": 2
+  },
+  "classification_weights": {
+    "title": 3,
+    "description": 1
+  },
   "keywords": {
-    "finance_accounting": ["thuế", "hóa đơn điện tử", "kế toán", "kiểm toán", "tài chính", "ngân hàng", "lãi suất", "tỷ giá", "chính sách tài chính", "kho bạc"],
-    "economy_business": ["kinh tế", "GDP", "CPI", "xuất khẩu", "nhập khẩu", "đầu tư", "chứng khoán", "doanh nghiệp", "bất động sản", "viễn thông", "công nghệ", "sản xuất"],
-    "hot_news": ["Việt Nam", "quốc tế", "AI", "trí tuệ nhân tạo", "thị trường", "thế giới", "bão", "chính phủ"]
+    "finance_accounting": [
+      "thuế",
+      "hóa đơn điện tử",
+      "kế toán",
+      "kiểm toán",
+      "tài chính",
+      "ngân hàng",
+      "lãi suất",
+      "kho bạc",
+      "báo cáo tài chính",
+      "bảo hiểm xã hội"
+    ],
+    "economy_business": [
+      "kinh tế",
+      "GDP",
+      "CPI",
+      "xuất khẩu",
+      "nhập khẩu",
+      "đầu tư",
+      "doanh nghiệp",
+      "bất động sản",
+      "viễn thông",
+      "công nghệ",
+      "sản xuất"
+    ],
+    "hot_news": [
+      "Việt Nam",
+      "quốc tế",
+      "AI",
+      "trí tuệ nhân tạo",
+      "thị trường",
+      "thế giới",
+      "bão",
+      "chính phủ"
+    ],
+    "legal_policy": [
+      "luật",
+      "nghị định",
+      "thông tư",
+      "nghị quyết",
+      "hiệu lực",
+      "chính sách thuế",
+      "đăng ký thuế"
+    ],
+    "vietnam_stocks": [
+      "VN-Index",
+      "VN Index",
+      "HNX",
+      "UPCoM",
+      "HOSE",
+      "cổ phiếu",
+      "chứng khoán Việt Nam",
+      "thanh khoản",
+      "thị trường vốn"
+    ],
+    "gold": [
+      "giá vàng",
+      "vàng miếng",
+      "vàng nhẫn",
+      "SJC",
+      "vàng thế giới",
+      "SPDR"
+    ],
+    "fx": [
+      "tỷ giá",
+      "USD/VND",
+      "EUR/VND",
+      "JPY/VND",
+      "ngoại hối",
+      "đồng USD"
+    ],
+    "crypto": [
+      "Bitcoin",
+      "Ethereum",
+      "crypto",
+      "tiền mã hóa",
+      "tiền điện tử",
+      "tài sản số",
+      "blockchain"
+    ]
   },
   "sources": [
-    {"name": "VnExpress — Kinh doanh", "url": "https://vnexpress.net/rss/kinh-doanh.rss", "priority": 8, "category": "economy_business"},
-    {"name": "VnExpress — Thời sự", "url": "https://vnexpress.net/rss/thoi-su.rss", "priority": 7, "category": "hot_news"},
-    {"name": "VnExpress — Thế giới", "url": "https://vnexpress.net/rss/the-gioi.rss", "priority": 7, "category": "hot_news"},
-    {"name": "VnExpress — Công nghệ", "url": "https://vnexpress.net/rss/khoa-hoc-cong-nghe.rss", "priority": 7, "category": "hot_news"},
-    {"name": "24H — Tài chính", "url": "https://cdn.24h.com.vn/upload/rss/taichinhbatdongsan.rss", "priority": 6, "category": "finance_accounting"},
-    {"name": "VnEconomy — Tin mới", "url": "https://vneconomy.vn/tin-moi.rss", "priority": 8, "category": "economy_business"},
-    {"name": "VnEconomy — Tài chính", "url": "https://vneconomy.vn/tai-chinh.rss", "priority": 8, "category": "finance_accounting"},
-    {"name": "Báo Chính phủ", "url": "https://baochinhphu.vn/home.rss", "priority": 10, "official": true, "category": "hot_news"},
-    {"name": "Bộ Tài chính", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định; không scrape đăng nhập/CAPTCHA"},
-    {"name": "Cơ quan Thuế", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định"},
-    {"name": "Ngân hàng Nhà nước", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định"},
-    {"name": "Cục Thống kê", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định"},
-    {"name": "Reuters", "enabled": false, "priority": 9, "reason": "Không có RSS miễn phí đã xác minh; không dùng endpoint trả phí"}
+    {
+      "name": "VnExpress — Kinh doanh",
+      "url": "https://vnexpress.net/rss/kinh-doanh.rss",
+      "priority": 8,
+      "category": "economy_business"
+    },
+    {
+      "name": "VnExpress — Thời sự",
+      "url": "https://vnexpress.net/rss/thoi-su.rss",
+      "priority": 7,
+      "category": "hot_news"
+    },
+    {
+      "name": "VnExpress — Thế giới",
+      "url": "https://vnexpress.net/rss/the-gioi.rss",
+      "priority": 7,
+      "category": "hot_news"
+    },
+    {
+      "name": "VnExpress — Công nghệ",
+      "url": "https://vnexpress.net/rss/khoa-hoc-cong-nghe.rss",
+      "priority": 7,
+      "category": "hot_news"
+    },
+    {
+      "name": "24H — Tài chính",
+      "url": "https://cdn.24h.com.vn/upload/rss/taichinhbatdongsan.rss",
+      "priority": 6,
+      "category": "finance_accounting"
+    },
+    {
+      "name": "VnEconomy — Tin mới",
+      "url": "https://vneconomy.vn/tin-moi.rss",
+      "priority": 8,
+      "category": "economy_business"
+    },
+    {
+      "name": "VnEconomy — Tài chính",
+      "url": "https://vneconomy.vn/tai-chinh.rss",
+      "priority": 8,
+      "category": "finance_accounting"
+    },
+    {
+      "name": "Báo Chính phủ",
+      "url": "https://baochinhphu.vn/home.rss",
+      "priority": 10,
+      "official": true,
+      "category": "hot_news"
+    },
+    {
+      "name": "Bộ Tài chính",
+      "enabled": false,
+      "priority": 10,
+      "official": true,
+      "reason": "Chưa xác minh được RSS công khai ổn định; không scrape đăng nhập/CAPTCHA"
+    },
+    {
+      "name": "Cơ quan Thuế",
+      "enabled": false,
+      "priority": 10,
+      "official": true,
+      "reason": "Chưa xác minh được RSS công khai ổn định"
+    },
+    {
+      "name": "Ngân hàng Nhà nước",
+      "enabled": false,
+      "priority": 10,
+      "official": true,
+      "reason": "Chưa xác minh được RSS công khai ổn định"
+    },
+    {
+      "name": "Cục Thống kê",
+      "enabled": false,
+      "priority": 10,
+      "official": true,
+      "reason": "Chưa xác minh được RSS công khai ổn định"
+    },
+    {
+      "name": "Reuters",
+      "enabled": false,
+      "priority": 9,
+      "reason": "Không có RSS miễn phí đã xác minh; không dùng endpoint trả phí"
+    },
+    {
+      "name": "Xây dựng chính sách — Chính phủ",
+      "url": "https://xaydungchinhsach.chinhphu.vn/home.rss",
+      "priority": 10,
+      "official": true,
+      "category": "legal_policy"
+    },
+    {
+      "name": "Thư Viện Pháp Luật",
+      "url": "https://thuvienphapluat.vn/phap-luat-doanh-nghiep",
+      "type": "html",
+      "selector": "a[href*=\"/phap-luat-doanh-nghiep/bai-viet/\"][href$=\".html\"]",
+      "priority": 7,
+      "category": "legal_policy",
+      "fallback": "Xây dựng chính sách — Chính phủ",
+      "title_min_chars": 45
+    },
+    {
+      "name": "CafeF — Chứng khoán",
+      "url": "https://cafef.vn/thi-truong-chung-khoan.rss",
+      "priority": 7,
+      "category": "vietnam_stocks"
+    },
+    {
+      "name": "VnEconomy — Chứng khoán",
+      "url": "https://vneconomy.vn/chung-khoan.rss",
+      "priority": 8,
+      "category": "vietnam_stocks"
+    },
+    {
+      "name": "Cointelegraph",
+      "url": "https://cointelegraph.com/rss",
+      "priority": 6,
+      "category": "crypto"
+    },
+    {
+      "name": "Chính phủ — Tham chiếu pháp lý 1",
+      "url": "https://baochinhphu.vn/diem-moi-ve-dang-ky-thue-tu-1-7-2026-102260722153658294.htm",
+      "type": "article",
+      "priority": 10,
+      "official": true,
+      "category": "legal_policy",
+      "reference": true
+    },
+    {
+      "name": "Chính phủ — Tham chiếu pháp lý 2",
+      "url": "https://baochinhphu.vn/thoi-diem-ap-dung-bieu-thue-thu-nhap-ca-nhan-moi-102260324150030818.htm",
+      "type": "article",
+      "priority": 10,
+      "official": true,
+      "category": "legal_policy",
+      "reference": true
+    },
+    {
+      "name": "Chính phủ — Tham chiếu pháp lý 3",
+      "url": "https://baochinhphu.vn/nhieu-thay-doi-ve-thue-doi-voi-ca-nhan-va-ho-kinh-doanh-102260106104740091.htm",
+      "type": "article",
+      "priority": 10,
+      "official": true,
+      "category": "legal_policy",
+      "reference": true
+    },
+    {
+      "name": "Chính phủ — Tham chiếu pháp lý 4",
+      "url": "https://xaydungchinhsach.chinhphu.vn/noi-dung-co-ban-cua-luat-xay-dung-135-2025-qh15-119260121111210485.htm",
+      "type": "article",
+      "priority": 10,
+      "official": true,
+      "category": "legal_policy",
+      "reference": true
+    }
+  ],
+  "version": "1.1",
+  "timezone": "Asia/Ho_Chi_Minh",
+  "recent_hours": 72,
+  "main_page_retention_days": 14,
+  "reference_retention_days": 30,
+  "legal_reference_retention_days": 365,
+  "history_max_items": 1500,
+  "section_max_items": 6,
+  "latest_items": 6,
+  "github_actions_schedule": "0 0 * * *",
+  "image_enabled": true,
+  "image_fallback": "category_icon",
+  "image_allowed_domains": [
+    "vnecdn.net",
+    "vcmedia.vn",
+    "vneconomy.vn",
+    "cointelegraph.com"
+  ],
+  "topic_cluster_threshold": 86,
+  "topic_overlap_threshold": 0.72,
+  "topic_min_shared_words": 4,
+  "legal_rules": {
+    "effective_from": "2026-07-01",
+    "near_effective_days": 30,
+    "unverified_max_priority": "TRUNG BINH",
+    "reference_max_items": 8
+  },
+  "legal_keywords": [
+    "luật",
+    "nghị định",
+    "thông tư",
+    "nghị quyết",
+    "hiệu lực",
+    "chính sách thuế",
+    "đăng ký thuế",
+    "thuế",
+    "hóa đơn",
+    "kế toán",
+    "kiểm toán",
+    "nghĩa vụ báo cáo"
+  ],
+  "stock_keywords": [
+    "VN-Index",
+    "VN Index",
+    "HNX",
+    "UPCoM",
+    "HOSE",
+    "cổ phiếu",
+    "chứng khoán Việt Nam",
+    "thanh khoản",
+    "thị trường vốn"
+  ],
+  "gold_keywords": [
+    "giá vàng",
+    "vàng miếng",
+    "vàng nhẫn",
+    "SJC",
+    "vàng thế giới",
+    "SPDR"
+  ],
+  "fx_keywords": [
+    "tỷ giá",
+    "USD/VND",
+    "EUR/VND",
+    "JPY/VND",
+    "ngoại hối",
+    "đồng USD"
+  ],
+  "crypto_keywords": [
+    "Bitcoin",
+    "Ethereum",
+    "crypto",
+    "tiền mã hóa",
+    "tiền điện tử",
+    "tài sản số",
+    "blockchain"
+  ],
+  "category_match_boost": {
+    "vietnam_stocks": 1.5,
+    "gold": 1.5,
+    "fx": 1.5,
+    "crypto": 1.5,
+    "legal_policy": 1.2
+  },
+  "market_sources": [
+    {
+      "name": "Vietcombank",
+      "kind": "fx",
+      "url": "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx",
+      "currencies": [
+        "USD",
+        "EUR",
+        "JPY"
+      ]
+    },
+    {
+      "name": "CoinGecko",
+      "kind": "crypto",
+      "url": "https://api.coingecko.com/api/v3/simple/price",
+      "params": {
+        "ids": "bitcoin,ethereum",
+        "vs_currencies": "usd",
+        "include_24hr_change": "true",
+        "include_last_updated_at": "true"
+      }
+    }
+  ],
+  "market_max_age_hours": 48,
+  "legal_evidence_max_chars": 500,
+  "html_source_max_items": 30,
+  "topic_numeric_update_terms": [
+    "vn-index",
+    "tỷ giá",
+    "lãi suất",
+    "giá vàng",
+    "bitcoin",
+    "ethereum",
+    "usd/vnd"
   ]
 }

@@ -1,0 +1,57 @@
+[
+  {
+    "label": "EUR/VND",
+    "value": 29913.63,
+    "buy": 28702.08,
+    "unit": "VND",
+    "kind": "fx",
+    "updated_at": "2026-10-06T10:19:20+07:00",
+    "source": "Vietcombank",
+    "url": "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx",
+    "stale": false
+  },
+  {
+    "label": "JPY/VND",
+    "value": 169.51,
+    "buy": 160.19,
+    "unit": "VND",
+    "kind": "fx",
+    "updated_at": "2026-10-06T10:19:20+07:00",
+    "source": "Vietcombank",
+    "url": "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx",
+    "stale": false
+  },
+  {
+    "label": "USD/VND",
+    "value": 26190.0,
+    "buy": 25810.0,
+    "unit": "VND",
+    "kind": "fx",
+    "updated_at": "2026-10-06T10:19:20+07:00",
+    "source": "Vietcombank",
+    "url": "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx",
+    "stale": false
+  },
+  {
+    "label": "Bitcoin",
+    "value": 85501.0,
+    "change": -1.0884316556429696,
+    "unit": "USD",
+    "kind": "crypto",
+    "updated_at": "2026-10-06T03:25:50+00:00",
+    "source": "CoinGecko",
+    "url": "https://api.coingecko.com/api/v3/simple/price",
+    "stale": false
+  },
+  {
+    "label": "Ethereum",
+    "value": 2699.62,
+    "change": -0.9630706011265533,
+    "unit": "USD",
+    "kind": "crypto",
+    "updated_at": "2026-10-06T03:25:40+00:00",
+    "source": "CoinGecko",
+    "url": "https://api.coingecko.com/api/v3/simple/price",
+    "stale": false
+  }
+]

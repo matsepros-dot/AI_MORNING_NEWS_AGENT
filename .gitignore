@@ -15,3 +15,6 @@ data/publish_pending.json
 config/runtime.json
 backup/
 scheduler/*.xml
+.tools/
+*.tmp
+.preview/
