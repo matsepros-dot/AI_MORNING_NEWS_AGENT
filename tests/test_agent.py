@@ -96,7 +96,7 @@ class AgentTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text('[]' if name.endswith('.json') else 'previous', encoding='utf-8')
         before = {name: (self.root / name).read_bytes() for name in files}
-        with patch('src.main.fetch_sources', return_value=([], [])):
+        with patch('src.fetcher.requests.get', side_effect=requests.ConnectionError('Internet disconnected')):
             self.assertEqual(run(self.root, CONFIG, LOGGER, True), 1)
         self.assertEqual(before, {name: (self.root / name).read_bytes() for name in files})
 
