@@ -1,0 +1,60 @@
+AI_MORNING_NEWS_AGENT V1.1
+TRẠNG THÁI: PASS
+Kiểm chứng ngày 06/10/2026, giờ Việt Nam.
+
+Cloud runner: GitHub-hosted ubuntu-latest, Python 3.12, repo public, không runner trả phí.
+GitHub Actions: active; workflow chỉ contents:write, concurrency chống chạy chồng, không PAT/OpenAI API.
+Schedule: cron 0 0 * * * = 00:00 UTC = 07:00 Asia/Ho_Chi_Minh.
+Windows task AI_MORNING_NEWS_AGENT_0700: Disabled; setup script deprecated, không task mới.
+Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
+Repo: https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT ; main ; Pages legacy main/root.
+
+Nguồn hoạt động cloud: 16 nguồn tin: VnExpress (4 RSS), 24H, VnEconomy tin mới/tài chính/chứng khoán, Báo Chính phủ, Xây dựng chính sách, CafeF, Cointelegraph, 4 bài tham chiếu Chính phủ. Vietcombank và CoinGecko public market OK.
+Nguồn bỏ qua/lỗi: TVPL trả 403 trên Ubuntu; fallback Chính phủ OK, không vượt bảo vệ. TVPL local HTTP200/30 headline. Bộ Tài chính, Cơ quan Thuế, NHNN, Cục Thống kê, Reuters tạm disabled vì chưa có RSS public ổn định đã xác minh; tin chính thống liên quan lấy qua nguồn Chính phủ.
+Legal 01/07/2026+: parse ngày nêu rõ, tăng điểm phù hợp, ưu tiên chính thống; ngày mơ hồ để trống, ngày quá khứ không tự kết luận văn bản còn hiệu lực. Bài nhiều mốc có cảnh báo phạm vi. 4 tham chiếu pháp lý cũ được giữ.
+Stock: section VN, CafeF/VnEconomy; 6 card lần cloud kiểm chứng.
+Gold: 4 headline và mô tả nguồn, không khuyến nghị giao dịch.
+FX: 3 card USD/EUR/JPY-VND Vietcombank kèm giờ nguồn; section headline có trạng thái chưa có cập nhật khi không có bài phù hợp.
+Crypto: 2 headline, BTC/ETH public price kèm giờ và biến động 24h.
+Main page live update: 40 card = 36 latest + 4 reference; latest riêng theo giờ nguồn; 8 category và reference riêng. Các threshold configurable.
+Archive: snapshot archive/2026-10-06.html + index; ngày trước không bị xóa.
+History: 600 metadata; đủ title/url/source/published/first_seen/last_seen/category/score/freshness/legal_effective_date/topic_key; tối đa 60 ngày theo last_seen và 1500 record.
+Responsive UI: thực tế trình duyệt local và Pages 390/768/1280; không tràn ngang; news grid 1/2/3 cột. Theme trích deck 48 slide: đỏ EE0027, xám393C3E, trắng; Arial/Segoe UI, không logo/font proprietary.
+Icons/images: 9 SVG tự tạo tải được; 14 thumbnail lazy trong lần kiểm chứng. Fixture ảnh404: hidden=true, display=none, fallback icon còn chiều cao ~201px; layout nguyên vẹn.
+Workflow manual run: hai lần success:
+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37409079381
+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37409205026
+Scheduled workflow: active và cron đã kiểm tra; chưa đến lần cron kế tiếp, không báo đã quan sát event schedule. GitHub có thể chạy trễ lịch.
+Commit/push Actions: bot commit e4f1d2735e3b29964cb0e5b48d3d2c196fc6c824 và 749430ddc2a3c6e6aa3197050677b82c27637afe, commit message chore: update morning news 2026-10-06.
+GitHub Pages: latest build built commit749430ddc2a3c6e6aa3197050677b82c27637afe sau lần dispatch2, không push local xen giữa. Public HTML khớp chính xác cloud output sau chuẩn hóa CRLF/LF. Main/archive/CSS/SVG/JS HTTP200. Giữ contents:write; không cấp thêm pages:write.
+
+[PASS] GitHub Actions workflow syntax
+[PASS] workflow_dispatch manual run
+[PASS] scheduled cron configured 00:00 UTC
+[PASS] fetch public sources
+[PASS] Thư Viện Pháp Luật source/fallback behavior
+[PASS] legal rules 01/07/2026+
+[PASS] finance/accounting/tax classification
+[PASS] economy classification
+[PASS] Vietnam stock section
+[PASS] gold section
+[PASS] FX section
+[PASS] crypto section
+[PASS] dedup
+[PASS] topic update prioritization
+[PASS] freshness sorting
+[PASS] old-but-still-valid item retention
+[PASS] render responsive page
+[PASS] icons render
+[PASS] image fallback
+[PASS] archive
+[PASS] history
+[PASS] commit/push from Actions
+[PASS] GitHub Pages updated
+
+Tests: 24/24 local và Linux Actions PASS; compileall PASS; pip check PASS.
+Edge tests PASS: nguồn chết/timeout/RSS malformed/403/404; thiếu ngày/description/image; duplicate title; newer numeric VN-Index update; distinct project numbers; no new news giữ reference; all sources fail giữ nguyên output; Git no changes thành công; conflict real bare remote + regenerate giữ owner README/history, không force-push; retention; legal unknown/multiple dates; market lỗi giữ timestamp và stale; ảnh URL lỗi fallback thực tế browser.
+Bảo vệ dữ liệu: KEY.txt không tracked hoặc đọc; .env/local runtime/logs ignored; publisher allowlist. Không tạo secret OpenAI/GitHub PAT.
+
+CÁC LỖI CÒN LẠI: Không có blocker. TVPL403 đã có fallback; các nguồn chưa xác minh được disabled có lý do. Dữ liệu pháp lý thiếu ngày được hiển thị chưa xác định, không bịa.
+HÀNH ĐỘNG DUY NHẤT NGƯỜI DÙNG CẦN LÀM: Không.

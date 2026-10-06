@@ -11,7 +11,7 @@ Trang thông tin sống chạy trên GitHub Actions miễn phí: nguồn công k
 - Snapshot: `archive/YYYY-MM-DD.html`. History giữ tối đa 60 ngày theo lần nhìn thấy và 1.500 bản ghi; snapshot ngày trước được giữ. Giá USD/EUR/JPY từ Vietcombank, BTC/ETH từ CoinGecko public, kèm thời gian nguồn; nguồn lỗi giữ giá trước và đánh dấu cũ.
 - Local: chạy `INSTALL.cmd` lần đầu, sau đó `RUN_AGENT.cmd --no-publish` để test. `RUN_AGENT.cmd` có thể publish thủ công bằng Git Credential Manager hiện có. Kiểm thử: `.venv\Scripts\python.exe -m unittest discover -s tests -v`.
 - Publish lỗi: xem Actions step commit/push; workflow chỉ retry xung đột trong checkout tạm của runner, tải remote rồi tạo lại dữ liệu. Không force-push. Branch protection có thể chặn quyền ghi; không thêm PAT. Local cần tích hợp remote trước khi publish.
-- Pages dùng main/root. GitHub không tự build Pages khi commit do GITHUB_TOKEN; chỉ contents:write chưa đủ cho cập nhật Pages tự động. Job yêu cầu build cần pages:write riêng và chỉ được thêm khi chủ repo đồng ý. Không cần token cá nhân.
+- Pages giữ cấu hình main/root. Đã xác minh thực tế Pages build commit do workflow tạo và website khớp HTML cloud. Workflow chỉ cấp contents:write; không thêm PAT hoặc quyền Pages. Khi publish lỗi, so commit của lần build Pages với main để phát hiện trang chưa cập nhật.
 
 Pipeline: exit 0 = PASS; 2 = PARTIAL; 1 = FAIL. Toàn bộ nguồn lỗi thì giữ nguyên website/history/archive. Không có tin mới vẫn dùng tin còn giá trị. No changes là thành công. Báo cáo local ở `data/run_report.json`, log xoay vòng ở `logs/agent.log`; các file này không publish. File key/.env/runtime local bị ignore và publisher dùng allowlist.
 
