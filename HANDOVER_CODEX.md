@@ -1,4 +1,4 @@
-# Bàn giao Codex — AI_MORNING_NEWS_AGENT V1.1
+# Bàn giao Codex — AI_MORNING_NEWS_AGENT V1.2
 
 Ngày tạo: 06/10/2026, khoảng 14:51 (Asia/Ho_Chi_Minh).
 Project trong sidebar: **WEB APP**.
@@ -192,3 +192,7 @@ Trình tự tiếp nhận bằng tài khoản Codex mới:
 - Thay đổi code phải có kiểm thử phù hợp; báo rõ kết quả thực tế, chưa kiểm chứng và blocker. Không ghi PASS cloud chỉ dựa unit test/mock hoặc log local.
 
 Tài liệu này giúp tiếp nhận dự án trong chat mới, không chuyển hoặc khôi phục nguyên lịch sử chat/tài khoản. Chỉ dùng trạng thái đã kiểm tra và bằng chứng có thời điểm; kiểm tra lại các thông tin có thể thay đổi trước khi dựa vào chúng để triển khai.
+
+## Cập nhật V1.2 — 06/10/2026
+
+Nâng version config/UI/user-agent/workflow lên 1.2; thêm SVG Home, liên kết Home về trang chính và nút nổi Về đầu trang trên trang tin. Kho snapshot có nút Home về trang hiện tại. Dùng anchor native, không cần JavaScript. Các bằng chứng V1.1 ở trên là lịch sử; kết quả triển khai V1.2 cần xem báo cáo VALIDATION_V1_2.txt.

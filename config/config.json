@@ -12,7 +12,7 @@
   "history_retention_days": 60,
   "request_timeout": 20,
   "max_feed_bytes": 5000000,
-  "user_agent": "AI-Morning-News-Agent/1.1 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
+  "user_agent": "AI-Morning-News-Agent/1.2 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
   "scheduler_time": "07:00",
   "output_paths": {
     "index": "index.html",
@@ -294,7 +294,7 @@
       "reference": true
     }
   ],
-  "version": "1.1",
+  "version": "1.2",
   "timezone": "Asia/Ho_Chi_Minh",
   "recent_hours": 72,
   "main_page_retention_days": 14,
