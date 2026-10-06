@@ -1,0 +1,18 @@
+AI_MORNING_NEWS_AGENT V1.3
+TRẠNG THÁI: PASS — 06/10/2026, Asia/Ho_Chi_Minh.
+
+Yêu cầu thiết kế lại được xác nhận: thanh điều hướng không biến mất khi cuộn, menu điện thoại gọn, desktop cân đối, card không ảnh nhỏ hơn.
+Thay đổi: header sticky + desktop nav một hàng tên ngắn; mobile details menu đóng khi chọn, Escape hoặc click ngoài; active category theo vị trí cuộn; header/section/floating Lên đầu; hero nhỏ bỏ số07; Top trước Latest; fallback không ảnh48px với icon24px; query assets v1.3-2 tránh CSS/JS cache cũ.
+Code commit đầu: f00d4c17b0569dbeada0e5a88a97b16bbb7a5406.
+Bản sửa anchor/highlight: 361acaea3c351678785c79d331be51939261e8e8.
+Tests local 24/24 PASS. Pipeline public local PASS, chọn40 item, history/archive giữ nguyên cơ chế.
+Workflow cloud success: https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37437212531 ; tests, pipeline, commit/push thành công.
+Pages latest build built commit361acae; HTML public khớp local sau chuẩn hóa CRLF/LF.
+Browser live desktop: bấm Tin nóng -> header top0, header bottom105px, section top136px; active Tin nóng; nút fixed vẫn hiện. Bấm Lên đầu -> scrollY0.
+Browser live mobile390: menu mở danh sách dọc, chọn Pháp lý -> menu đóng, active đúng Pháp lý; header bottom63px, section top94px; nút nổi nằm trong viewport, bấm về scrollY0.
+Responsive390/768/1280: scrollWidth375/753/1265 (không tràn ngang); header top0 khi đọc dưới trang, nút nổi không vượt viewport.
+Các giới hạn nguồn/market/legal đã nêu trong V1.1 không thay đổi. Không API trả phí/OpenAI, không PAT/quyền workflow mới; cron00:00UTC/main-root giữ nguyên.
+Xung đột khi đồng bộ cloud: chỉ HTML generated bị conflict; đã render lại từ danh sách URL và history cloud, không reset checkout local hoặc force-push. Stash backup giữ lại để phục hồi nếu cần, không còn unmerged paths.
+Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
+Lỗi còn lại: Không có blocker mới.
+Người dùng không cần cấu hình lại; website hiển thị V1.3.
