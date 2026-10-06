@@ -1,0 +1,20 @@
+AI_MORNING_NEWS_AGENT V1.2
+TRẠNG THÁI: PASS
+Kiểm chứng 06/10/2026, Asia/Ho_Chi_Minh.
+
+Yêu cầu: nâng V1.2, thêm Home/quay đầu trang và xác minh GitHub cập nhật.
+Thay đổi: config/version/user-agent/workflow/README V1.2; Home ở header về index.html#top, nút nổi Về đầu trang href=#top; kho snapshot có Home về trang hiện tại; SVG Home tự tạo; CSS fixed responsive, focus-visible, footer có khoảng trống cho nút.
+Tests local: 24/24 PASS.
+Pipeline public local: PASS, 40 thông tin được chọn.
+Workflow cloud: success, các tests/pipeline/push hoàn tất.
+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37436279772
+Code commit: 9d1b48783c19f27f4dc17f994401cc2e8909766f
+Cloud output commit: c0678aca2142099d57c0ef268228c3b191a5cd82
+Pages build: built đúng cloud output commit; public HTML khớp local sau fast-forward và chuẩn hóa CRLF/LF.
+Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
+Browser thực tế: V1.2 hiển thị; bấm Tin nóng rồi Home — Về đầu trang: scrollY khoảng8785 -> 0, hash=#top; SVG tải được.
+Responsive: 390/768/1280 không tràn ngang, nút nổi nằm trong viewport.
+History/archive được giữ, main/root và cron00:00UTC giữ nguyên; permissions chỉ contents:write, không API trả phí hoặc OpenAI.
+Bàn giao: HANDOVER_CODEX.md cập nhật phần V1.2, có trong Git.
+Lỗi còn lại: Không có blocker mới; giới hạn nguồn/TVPL fallback như V1.1.
+Hành động người dùng: Không. Nếu tab cũ còn V1.1, refresh bằng Ctrl+F5.
