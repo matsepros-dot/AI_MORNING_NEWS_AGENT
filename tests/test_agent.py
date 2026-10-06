@@ -61,6 +61,7 @@ class AgentTests(unittest.TestCase):
         for title, expected in [('Quy định hóa đơn điện tử và kế toán', 'finance_accounting'), ('Doanh nghiệp xuất khẩu', 'economy_business'), ('Bão mạnh trên thế giới', 'hot_news')]:
             self.assertEqual(item(title)['category'], expected)
         self.assertNotIn('AI', item('Hai người gặp nhau')['keywords'])
+        self.assertNotIn('thuế', item('Doanh nghiệp thuê nhà máy')['keywords'])
 
     def test_dedup_official_priority_fuzzy_and_numbers(self):
         a = item()

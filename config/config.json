@@ -19,6 +19,7 @@
   "scoring_weights": {"source_priority": 4, "freshness": 20, "keyword_importance": 3, "keyword_count": 2, "category_relevance": 5, "description": 3, "title_quality": 2, "missing_date_penalty": 15},
   "priority_thresholds": {"high": 65, "medium": 45},
   "keyword_importance": {"thuế": 3, "hóa đơn điện tử": 4, "kế toán": 4, "kiểm toán": 3, "lãi suất": 3, "tỷ giá": 3, "chính sách": 2},
+  "classification_weights": {"title": 3, "description": 1},
   "keywords": {
     "finance_accounting": ["thuế", "hóa đơn điện tử", "kế toán", "kiểm toán", "tài chính", "ngân hàng", "lãi suất", "tỷ giá", "chính sách tài chính", "kho bạc"],
     "economy_business": ["kinh tế", "GDP", "CPI", "xuất khẩu", "nhập khẩu", "đầu tư", "chứng khoán", "doanh nghiệp", "bất động sản", "viễn thông", "công nghệ", "sản xuất"],

@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 # Explicit allowlist: never stage arbitrary local files such as KEY.txt.
 TRACKED_PATHS = ['.gitignore', '.nojekyll', 'requirements.txt', 'INSTALL.cmd', 'RUN_AGENT.cmd',
@@ -7,10 +8,22 @@ TRACKED_PATHS = ['.gitignore', '.nojekyll', 'requirements.txt', 'INSTALL.cmd', '
 
 
 def git(root, *args):
-    result = subprocess.run(['git', *args], cwd=root, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=120)
-    if result.returncode:
-        raise RuntimeError(f'git {args[0]} failed: {(result.stderr or result.stdout).strip()}')
-    return result.stdout.strip()
+    environment = os.environ.copy()
+    environment.update(GIT_TERMINAL_PROMPT='0', GCM_INTERACTIVE='never')
+    process = subprocess.Popen(['git', *args], cwd=root, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                               text=True, encoding='utf-8', errors='replace', env=environment)
+    try:
+        stdout, stderr = process.communicate(timeout=120)
+    except subprocess.TimeoutExpired:
+        if os.name == 'nt':
+            subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'], capture_output=True, timeout=15)
+        else:
+            process.kill()
+        process.communicate(timeout=15)
+        raise
+    if process.returncode:
+        raise RuntimeError(f'git {args[0]} failed: {(stderr or stdout).strip()}')
+    return stdout.strip()
 
 
 def publish(root, logger, config):
