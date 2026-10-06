@@ -34,7 +34,7 @@ if __name__ == '__main__':
         environment = os.environ.copy()
         environment['PATH'] = str(Path(executable).parent) + os.pathsep + environment.get('PATH', '')
         raise SystemExit(subprocess.call([executable, 'credential-manager', 'github', 'login',
-                                        '--username', config['publish']['account'], '--browser'], env=environment))
+                                        '--username', config['publish']['account'], '--browser', '--no-ui'], env=environment))
     subprocess.run([executable, '--version'], check=True)
     (root / 'config').mkdir(exist_ok=True)
     (root / 'config/runtime.json').write_text(json.dumps({'git_executable': executable}, indent=2) + '\n', encoding='utf-8')
