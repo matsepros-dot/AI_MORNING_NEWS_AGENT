@@ -2,7 +2,9 @@ name: Morning news V1.3
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    # UTC: 01:00 = 08:00 and 06:30 = 13:30 in Vietnam (UTC+07:00).
+    - cron: '0 1 * * *'
+    - cron: '30 6 * * *'
   workflow_dispatch:
 
 permissions:

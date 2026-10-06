@@ -91,7 +91,7 @@ def run(root, config, logger, no_publish=False):
         previous_market = json.loads(market_path.read_text(encoding='utf-8')) if market_path.exists() else []
         markets, market_results = fetch_markets(config, logger, now, previous_market)
         report['market_sources'] = market_results
-        render(root, config, selected, now, markets)
+        render(root, config, selected, datetime.now(ZoneInfo(config['timezone'])), markets)
         logger.info('RENDER OK live page and daily snapshot')
         for item in merged:
             item['edition_date'] = now.date().isoformat()

@@ -4,7 +4,7 @@ Trang thông tin sống chạy trên GitHub Actions miễn phí: nguồn công k
 
 - Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
 - Chạy tay: GitHub → Actions → Morning news V1.3 → Run workflow → main. Xem từng step và log ngay trong lần chạy.
-- Lịch: `0 0 * * *` (00:00 UTC = 07:00 Asia/Ho_Chi_Minh). GitHub có thể khởi chạy trễ; đây là lịch cấu hình, không bảo đảm đúng từng phút.
+- Lịch: `0 1 * * *` và `30 6 * * *` (08:00 và 13:30 Asia/Ho_Chi_Minh mỗi ngày). GitHub có thể khởi chạy trễ; đây là lịch cấu hình, không bảo đảm đúng từng phút.
 - Windows Task Scheduler cũ được ngừng dùng cho production; `scheduler/install_task.ps1` đã deprecated và không đăng ký task mới.
 - Sửa nguồn / keyword / thời gian lưu / điểm: `config/config.json`. RSS, HTML công khai và bài tham chiếu chính thống đều configurable. TVPL lỗi hoặc chặn truy cập sẽ chuyển sang nguồn Chính phủ; không vượt CAPTCHA/paywall.
 - Trang chính ưu tiên latest (24 giờ), recent (72 giờ), ongoing và reference. Tin pháp lý cũ hữu ích được giữ riêng; không suy diễn ngày hiệu lực hoặc tình trạng luật. Dữ liệu ngày không chắc chắn hiển thị chưa xác định. Tin pháp lý chưa đối chiếu chính thống không xếp ưu tiên cao.
@@ -20,3 +20,5 @@ Giao diện dựa tone đỏ #EE0027, trắng/xám của slide mẫu, dùng Aria
 V1.3: thêm Home ở thanh đầu trang và nút nổi Về đầu trang, dùng liên kết anchor không cần JavaScript.
 
 V1.3: header sticky, menu mobile mở/đóng, chọn nhóm tin hiện tại, nút Lên đầu cố định và card không ảnh gọn. CSS/JS có query version để tránh cache bản cũ.
+
+Website hiển thị lịch 08:00 và 13:30 cùng thời gian tạo bản tin gần nhất theo giờ Việt Nam. Thời gian hiển thị là lúc render sau khi lấy nguồn; có thể khác lịch dự kiến do GitHub chạy trễ hoặc chạy tay. Trang đang mở cần tải lại để thấy bản mới.

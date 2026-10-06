@@ -172,7 +172,7 @@ Trình tự tiếp nhận bằng tài khoản Codex mới:
 - Branch production: `main`.
 - Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
 - Pages đã kiểm chứng là **legacy / main / root**; `.nojekyll` có trong repo.
-- Cron: `0 0 * * *` = 00:00 UTC = 07:00 Việt Nam. `workflow_dispatch` để chạy tay, không trigger push tùy tiện.
+- Cron hiện tại: `0 1 * * *` và `30 6 * * *` = 08:00 và 13:30 Việt Nam mỗi ngày. `workflow_dispatch` để chạy tay, không trigger push tùy tiện.
 - Runner Ubuntu, Python 3.12; timeout 15 phút; concurrency group production, không cancel job trước; permissions chỉ `contents: write`.
 - Cloud publish chỉ index/archive/data history/data market; retry tối đa 3 theo default. Khi conflict, fetch main, reset checkout runner tạm về main rồi regenerate theo history mới; không force-push.
 - Windows task `AI_MORNING_NEWS_AGENT_0700` đã được **disable và xác minh** trong phiên V1.1. Script cũ deprecated; không dùng local làm production primary.
@@ -200,3 +200,7 @@ Nâng version config/UI/user-agent/workflow lên 1.2; thêm SVG Home, liên kế
 ## Cập nhật V1.3 — 06/10/2026
 
 Theo yêu cầu thiết kế lại: header sticky, desktop menu một hàng tên ngắn, mobile menu details đóng sau khi chọn/Escape/click ngoài; liên kết Lên đầu trong header/section và nút fixed nổi; hero gọn bỏ số07; Top trước Latest; fallback không ảnh gọn. Assets thêm query version để cache CSS/JS không giữ bản cũ. Xem reports/VALIDATION_V1_3.txt để đối chiếu kiểm chứng.
+
+## Điều chỉnh lịch — 06/10/2026
+
+Theo yêu cầu người dùng: thay lịch GitHub 07:00 bằng hai lần 08:00 và 13:30 giờ Việt Nam. Config dùng scheduler_times, website hiển thị lịch và thời gian render thực tế sau khi lấy nguồn (Cập nhật gần nhất); lịch cron có thể trễ. Windows scheduler vẫn ngừng dùng. Không thêm dịch vụ trả phí hoặc API key.
