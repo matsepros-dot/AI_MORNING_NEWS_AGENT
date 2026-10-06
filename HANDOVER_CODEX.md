@@ -1,4 +1,4 @@
-# Bàn giao Codex — AI_MORNING_NEWS_AGENT V1.2
+# Bàn giao Codex — AI_MORNING_NEWS_AGENT V1.3
 
 Ngày tạo: 06/10/2026, khoảng 14:51 (Asia/Ho_Chi_Minh).
 Project trong sidebar: **WEB APP**.
@@ -196,3 +196,7 @@ Tài liệu này giúp tiếp nhận dự án trong chat mới, không chuyển 
 ## Cập nhật V1.2 — 06/10/2026
 
 Nâng version config/UI/user-agent/workflow lên 1.2; thêm SVG Home, liên kết Home về trang chính và nút nổi Về đầu trang trên trang tin. Kho snapshot có nút Home về trang hiện tại. Dùng anchor native, không cần JavaScript. Các bằng chứng V1.1 ở trên là lịch sử; kết quả triển khai V1.2 cần xem báo cáo VALIDATION_V1_2.txt.
+
+## Cập nhật V1.3 — 06/10/2026
+
+Theo yêu cầu thiết kế lại: header sticky, desktop menu một hàng tên ngắn, mobile menu details đóng sau khi chọn/Escape/click ngoài; liên kết Lên đầu trong header/section và nút fixed nổi; hero gọn bỏ số07; Top trước Latest; fallback không ảnh gọn. Assets thêm query version để cache CSS/JS không giữ bản cũ. Xem reports/VALIDATION_V1_3.txt để đối chiếu kiểm chứng.
