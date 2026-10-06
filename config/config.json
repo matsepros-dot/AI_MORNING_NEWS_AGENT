@@ -1,0 +1,42 @@
+{
+  "lookback_hours": 24,
+  "future_tolerance_hours": 1,
+  "min_items": 8,
+  "max_items": 12,
+  "top_items": 3,
+  "ensure_category_coverage": true,
+  "top_diversity_margin": 6,
+  "description_max_chars": 320,
+  "title_min_chars": 20,
+  "fuzzy_duplicate_threshold": 94,
+  "history_retention_days": 45,
+  "request_timeout": 20,
+  "max_feed_bytes": 5000000,
+  "user_agent": "AI-Morning-News-Agent/1.0 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
+  "scheduler_time": "07:00",
+  "output_paths": {"index": "index.html", "archive": "archive", "history": "data/history.json", "log": "logs/agent.log"},
+  "publish": {"remote": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT.git", "branch": "main"},
+  "scoring_weights": {"source_priority": 4, "freshness": 20, "keyword_importance": 3, "keyword_count": 2, "category_relevance": 5, "description": 3, "title_quality": 2, "missing_date_penalty": 15},
+  "priority_thresholds": {"high": 65, "medium": 45},
+  "keyword_importance": {"thuế": 3, "hóa đơn điện tử": 4, "kế toán": 4, "kiểm toán": 3, "lãi suất": 3, "tỷ giá": 3, "chính sách": 2},
+  "keywords": {
+    "finance_accounting": ["thuế", "hóa đơn điện tử", "kế toán", "kiểm toán", "tài chính", "ngân hàng", "lãi suất", "tỷ giá", "chính sách tài chính", "kho bạc"],
+    "economy_business": ["kinh tế", "GDP", "CPI", "xuất khẩu", "nhập khẩu", "đầu tư", "chứng khoán", "doanh nghiệp", "bất động sản", "viễn thông", "công nghệ", "sản xuất"],
+    "hot_news": ["Việt Nam", "quốc tế", "AI", "trí tuệ nhân tạo", "thị trường", "thế giới", "bão", "chính phủ"]
+  },
+  "sources": [
+    {"name": "VnExpress — Kinh doanh", "url": "https://vnexpress.net/rss/kinh-doanh.rss", "priority": 8, "category": "economy_business"},
+    {"name": "VnExpress — Thời sự", "url": "https://vnexpress.net/rss/thoi-su.rss", "priority": 7, "category": "hot_news"},
+    {"name": "VnExpress — Thế giới", "url": "https://vnexpress.net/rss/the-gioi.rss", "priority": 7, "category": "hot_news"},
+    {"name": "VnExpress — Công nghệ", "url": "https://vnexpress.net/rss/khoa-hoc-cong-nghe.rss", "priority": 7, "category": "hot_news"},
+    {"name": "24H — Tài chính", "url": "https://cdn.24h.com.vn/upload/rss/taichinhbatdongsan.rss", "priority": 6, "category": "finance_accounting"},
+    {"name": "VnEconomy — Tin mới", "url": "https://vneconomy.vn/tin-moi.rss", "priority": 8, "category": "economy_business"},
+    {"name": "VnEconomy — Tài chính", "url": "https://vneconomy.vn/tai-chinh.rss", "priority": 8, "category": "finance_accounting"},
+    {"name": "Báo Chính phủ", "url": "https://baochinhphu.vn/home.rss", "priority": 10, "official": true, "category": "hot_news"},
+    {"name": "Bộ Tài chính", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định; không scrape đăng nhập/CAPTCHA"},
+    {"name": "Cơ quan Thuế", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định"},
+    {"name": "Ngân hàng Nhà nước", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định"},
+    {"name": "Cục Thống kê", "enabled": false, "priority": 10, "official": true, "reason": "Chưa xác minh được RSS công khai ổn định"},
+    {"name": "Reuters", "enabled": false, "priority": 9, "reason": "Không có RSS miễn phí đã xác minh; không dùng endpoint trả phí"}
+  ]
+}

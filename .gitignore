@@ -1,0 +1,16 @@
+.venv/
+logs/
+__pycache__/
+*.pyc
+.env*
+KEY.txt
+*key*.txt
+*.pem
+*.pfx
+.repo_import/
+.run.lock
+data/run_report.json
+data/publish_pending.json
+.pytest_cache/
+backup/
+scheduler/*.xml
