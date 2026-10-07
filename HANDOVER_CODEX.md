@@ -224,3 +224,7 @@ Theo yêu cầu mới, thay lịch mỗi giờ bằng 08:00,08:30,...,17:00,17:3
 ## Chuẩn bị thử cron-job.org
 
 Người dùng đã đồng ý thử dịch vụ thay cron. Workflow external-news.yml và external_schedule_policy.py nhận API dispatch, nhưng scheduler_provider=github nên standby. Khi chuyển provider, guard cũ chặn fetch/publish để tránh hai bộ lịch. Cần đăng nhập cron-job.org và token chuyên dụng repository-only Actions write; không dùng/chia sẻ GCM credential. 45 tests PASS; chưa có end-to-end ngoài dịch vụ. Xem reports/CRON_JOB_TRIAL_SETUP.md và config/cron-job-trial.template.json (không credential). Lịch thử khóa07/10 hết17:30, yêu cầu sẵn credential mới kích hoạt. Quy định cấm chạy tay trước đây được thay thế có giới hạn bởi thử kích hoạt có lịch qua cron-job.org; chưa cho manual recovery ngoài slot.
+
+## Kết quả tự động cuối ngày07/10
+
+Đã có run schedule37607710402 tạo17:29:14, publish thực sự success, website17:30:09; run37609557263 tạo17:45:57 bị guard bỏ qua update job. Tổng thể PARTIAL: end-to-end tự động PASS, đúng giờ FAIL; cronjob vẫnstandby. Checker sửa false alarm do workflow success nhưngupdate-news skipped;46 tests PASS. Xem reports/VALIDATION_AUTOMATIC_FINAL_2026_10_07.md. Không chứng minh cron đã hỏng vĩnh viễn hoặc khôi phục lịch đúng phút. Automation theo dõi dừng theo điều kiện có bằng chứng end-to-end.

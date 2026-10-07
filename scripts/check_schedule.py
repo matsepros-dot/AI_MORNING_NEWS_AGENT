@@ -30,7 +30,7 @@ def planned_slots(config, now):
             for t in config['scheduler_times']]
 
 
-def assess(config, now, runs, page_time, workflow_state='active', config_matches=True):
+def assess(config, now, runs, page_time, workflow_state='active', config_matches=True, job_outcomes=None):
     slots = planned_slots(config, now)
     due = [x for x in slots if now >= x + timedelta(minutes=1)]
     scheduled = [r for r in runs if r['event'] == 'schedule'
@@ -51,7 +51,8 @@ def assess(config, now, runs, page_time, workflow_state='active', config_matches
     elif any(r.get('conclusion') in ('failure', 'cancelled', 'timed_out') for r in scheduled):
         status, boundary = 'FAIL', 'SCHEDULED_RUN_FAILED'
     elif page_time:
-        successes = [r for r in scheduled if r.get('conclusion') == 'success']
+        successes = [r for r in scheduled if r.get('conclusion') == 'success'
+                     and (job_outcomes is None or job_outcomes.get(r['id'], {}).get('published') is True)]
         if successes and max(datetime.fromisoformat(r['created_at'].replace('Z', '+00:00')) for r in successes) > datetime.fromisoformat(page_time):
             status, boundary = 'FAIL', 'PUBLIC_PAGE_OLDER_THAN_SUCCESSFUL_RUN'
     return dict(status=status, boundary=boundary, checked_at=now.isoformat(), public_update=page_time,
@@ -85,15 +86,24 @@ def main():
             runs.extend(batch)
             if len(batch) < 100 or datetime.fromisoformat(batch[-1]['created_at'].replace('Z', '+00:00')).astimezone(now.tzinfo).date() < now.date():
                 break
+        outcomes = {}
+        for run in runs:
+            if datetime.fromisoformat(run['created_at'].replace('Z', '+00:00')).astimezone(now.tzinfo).date() != now.date():
+                continue
+            jobs = get_json(session, base + '/actions/runs/' + str(run['id']) + '/jobs')['jobs']
+            outcomes[run['id']] = dict(
+                jobs={j['name']:j['conclusion'] for j in jobs},
+                published=any(step['name'] == 'Commit and push generated files' and step['conclusion'] == 'success'
+                              for job in jobs for step in job.get('steps', [])))
         pages = get_json(session, base + '/pages/builds/latest')
         website = requests.get('https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/',
                                params={'schedule_check': now.isoformat()}, timeout=30)
         website.raise_for_status()
         time = BeautifulSoup(website.text, 'html.parser').select_one('.edition time[datetime]')
-        report = assess(config, now, runs, time['datetime'] if time else None, workflow['state'], matches)
+        report = assess(config, now, runs, time['datetime'] if time else None, workflow['state'], matches, outcomes)
         report['evidence'] = dict(default_branch=repo['default_branch'], workflow_state=workflow['state'],
                                   actions_enabled=permissions['enabled'], remote_matches=remote == local,
-                                  pages_status=pages['status'], pages_commit=pages['commit'],
+                                  pages_status=pages['status'], pages_commit=pages['commit'], job_outcomes=outcomes,
                                   runs=[{k:r.get(k) for k in ('id','event','status','conclusion','created_at','run_started_at','html_url')} for r in runs])
     except Exception as exc:
         # Never dump authenticated requests/headers/credential output.

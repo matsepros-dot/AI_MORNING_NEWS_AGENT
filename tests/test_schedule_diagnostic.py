@@ -45,6 +45,14 @@ class ScheduleDiagnosticTests(unittest.TestCase):
         self.assertEqual(result['slots'][2]['run_ids'], [1])
         self.assertEqual(result['status'], 'PARTIAL')
 
+    def test_skipped_success_is_not_a_successful_publication(self):
+        runs = [dict(id=1,event='schedule',created_at='2026-10-07T10:29:14Z',conclusion='success'),
+                dict(id=2,event='schedule',created_at='2026-10-07T10:45:57Z',conclusion='success')]
+        outcomes = {1:{'published':True},2:{'published':False}}
+        result = assess(CONFIG,datetime(2026,10,7,17,53,tzinfo=VN),runs,'2026-10-07T17:30:09+07:00',job_outcomes=outcomes)
+        self.assertEqual(result['status'],'PARTIAL')
+        self.assertNotEqual(result['boundary'],'PUBLIC_PAGE_OLDER_THAN_SUCCESSFUL_RUN')
+
     def test_disabled_workflow_reported_as_configuration(self):
         result = assess(CONFIG, datetime(2026, 10, 7, 9, 11, tzinfo=VN), [], None, 'disabled_manually')
         self.assertEqual(result['boundary'], 'WORKFLOW_CONFIGURATION')
