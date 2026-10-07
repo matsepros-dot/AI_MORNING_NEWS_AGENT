@@ -1,0 +1,46 @@
+{
+  "job": {
+    "title": "AI Morning News - trial 2026-10-07",
+    "enabled": false,
+    "url": "https://api.github.com/repos/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/workflows/external-news.yml/dispatches",
+    "requestMethod": 1,
+    "saveResponses": true,
+    "schedule": {
+      "timezone": "Asia/Ho_Chi_Minh",
+      "expiresAt": 20261007173059,
+      "hours": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "minutes": [
+        0,
+        30
+      ],
+      "mdays": [
+        7
+      ],
+      "months": [
+        10
+      ],
+      "wdays": [
+        -1
+      ]
+    },
+    "extendedData": {
+      "headers": {
+        "Accept": "application/vnd.github+json",
+        "Content-Type": "application/json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      },
+      "body": "{\"ref\": \"main\", \"inputs\": {\"source\": \"cron-job.org\", \"requested_at\": \"%cjo:unixtime%\"}}"
+    }
+  }
+}

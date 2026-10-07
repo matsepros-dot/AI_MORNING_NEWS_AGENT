@@ -11,6 +11,8 @@ TRIAL_CRONS = {'0 2-10 7 10 *', '30 1-5,7-10 7 10 *'}
 
 
 def eligibility(config, now, event, cron='', attempt=1):
+    if config.get('scheduler_provider', 'github') != 'github':
+        return False, 'GitHub cron disabled while external scheduler is active'
     if event != 'schedule':
         return False, 'Only automatic scheduled events allowed; supplemental runs disabled'
     if attempt != 1:
