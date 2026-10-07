@@ -22,3 +22,5 @@ V1.3: thêm Home ở thanh đầu trang và nút nổi Về đầu trang, dùng 
 V1.3: header sticky, menu mobile mở/đóng, chọn nhóm tin hiện tại, nút Lên đầu cố định và card không ảnh gọn. CSS/JS có query version để tránh cache bản cũ.
 
 Website hiển thị lịch 08:00 và 13:30 cùng thời gian tạo bản tin gần nhất theo giờ Việt Nam. Thời gian hiển thị là lúc render sau khi lấy nguồn; có thể khác lịch dự kiến do GitHub chạy trễ hoặc chạy tay. Trang đang mở cần tải lại để thấy bản mới.
+
+Thử nghiệm riêng 07/10/2026: 08:00–17:00 mỗi giờ và 17:30; từ 08/10 trở lại 08:00/13:30. Cron 13:30 bị policy bỏ qua trong ngày thử. Workflow kiểm tra ngày/giờ trước cài dependency, trước fetch và trước publish; từ 17:31 không bắt đầu fetch/publish. GitHub vẫn có thể tạo job kiểm tra hoặc build Pages hoàn tất muộn. Schedule cron không có trường năm nên các trigger trial cùng ngày/tháng năm sau bị policy chặn. Thời gian check thực tế/event/cron và lý do bỏ qua có trong Actions job summary. Workflow_dispatch chỉ kiểm tra pipeline, không chứng minh schedule tự chạy; các mốc đã qua không chạy bù bằng schedule. Không bảo đảm đúng phút do lịch GitHub có thể trễ/bỏ qua.

@@ -5,6 +5,10 @@ on:
     # UTC: 01:00 = 08:00 and 06:30 = 13:30 in Vietnam (UTC+07:00).
     - cron: '0 1 * * *'
     - cron: '30 6 * * *'
+    # One-day trial: 09:00-17:00 hourly and 17:30; 08:00 uses normal cron.
+    # Policy rejects these extra triggers on every date except 2026-10-07.
+    - cron: '0 2-10 7 10 *'
+    - cron: '30 10 7 10 *'
   workflow_dispatch:
 
 permissions:
@@ -15,7 +19,18 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  schedule-policy:
+    runs-on: ubuntu-latest
+    outputs:
+      allowed: ${{ steps.policy.outputs.allowed }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check date and allowed update window
+        id: policy
+        run: python3 scripts/schedule_policy.py
   update-news:
+    needs: schedule-policy
+    if: needs.schedule-policy.outputs.allowed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -33,7 +48,11 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Tests
         run: python -m unittest discover -s tests -v
+      - name: Recheck window before fetching
+        id: fetch-window
+        run: python scripts/schedule_policy.py
       - name: Update live information
+        if: steps.fetch-window.outputs.allowed == 'true'
         env:
           PYTHONUTF8: '1'
         run: |
@@ -47,5 +66,10 @@ jobs:
               exit "$result"
             fi
           fi
+      - name: Recheck window before publishing
+        id: publish-window
+        if: steps.fetch-window.outputs.allowed == 'true'
+        run: python scripts/schedule_policy.py
       - name: Commit and push generated files
+        if: steps.publish-window.outputs.allowed == 'true'
         run: python src/cloud_publish.py

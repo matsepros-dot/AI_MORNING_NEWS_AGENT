@@ -18,7 +18,7 @@ def render(root, config, items, now, markets=None):
     context = dict(items=items, current=current, older=[x for x in items if x['freshness_bucket'] in ('ongoing', 'reference')],
                    latest=sorted(current, key=lambda x: x.get('published_at') or x['first_seen_at'], reverse=True)[:config['latest_items']],
                    top=select_top(sorted(current or items, key=lambda x:x['score'], reverse=True), config), categories=CATEGORIES, now=now,
-                   edition=now.date().isoformat(), count=len(items), minimum=config['min_items'], markets=markets or [], version=config['version'], scheduler_times=config['scheduler_times'])
+                   edition=now.date().isoformat(), count=len(items), minimum=config['min_items'], markets=markets or [], version=config['version'], scheduler_times=config['scheduler_times'], schedule_trial=config.get('schedule_trial', {}))
     template = env.get_template('index.html')
     archive_content = template.render(**context, prefix='../', archive_link='index.html')
     atomic_write(archive / (context['edition'] + '.html'), archive_content)

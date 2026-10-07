@@ -150,7 +150,10 @@ class V11Tests(unittest.TestCase):
                 self.assertEqual(run(root,config,LOGGER,True),0)
             page=(root/'index.html').read_text(encoding='utf-8')
             self.assertIn('Tham chiếu',page)
-            self.assertIn('Lịch cập nhật: 08:00 và 13:30 mỗi ngày',page)
+            if datetime.now(ZoneInfo(CONFIG['timezone'])).date().isoformat() == CONFIG.get('schedule_trial', {}).get('date'):
+                self.assertIn('Lịch thử hôm nay: mỗi giờ 08:00–17:00, thêm 17:30',page)
+            else:
+                self.assertIn('Lịch cập nhật: 08:00 và 13:30 mỗi ngày',page)
             self.assertIn('Cập nhật gần nhất:',page)
             self.assertIn('datetime="',page)
             self.assertEqual(len(json.loads((root/'data/history.json').read_text())),1)
@@ -158,7 +161,7 @@ class V11Tests(unittest.TestCase):
     def test_workflow_syntax_schedule_and_least_privilege(self):
         value = yaml.safe_load((ROOT/'.github/workflows/morning-news.yml').read_text())
         triggers = value.get('on',value.get(True))
-        self.assertEqual([entry['cron'] for entry in triggers['schedule']], ['0 1 * * *', '30 6 * * *'])
+        self.assertEqual([entry['cron'] for entry in triggers['schedule']], ['0 1 * * *', '30 6 * * *', '0 2-10 7 10 *', '30 10 7 10 *'])
         self.assertEqual(CONFIG['scheduler_times'], ['08:00', '13:30'])
         self.assertIn('workflow_dispatch',triggers)
         self.assertEqual(value['permissions'],{'contents':'write'})

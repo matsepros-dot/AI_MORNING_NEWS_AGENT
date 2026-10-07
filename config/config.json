@@ -14,6 +14,7 @@
   "max_feed_bytes": 5000000,
   "user_agent": "AI-Morning-News-Agent/1.3 (+https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT; public RSS reader)",
   "scheduler_times": ["08:00", "13:30"],
+  "schedule_trial": {"date": "2026-10-07", "start": "08:00", "end": "17:30"},
   "output_paths": {
     "index": "index.html",
     "archive": "archive",
