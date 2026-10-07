@@ -208,3 +208,7 @@ Theo yêu cầu người dùng: thay lịch GitHub 07:00 bằng hai lần 08:00 
 ## Thử nghiệm tự động trong ngày 07/10/2026
 
 Theo yêu cầu người dùng: mỗi giờ 08:00–17:00, thêm 17:30. scripts/schedule_policy.py khóa ngày cụ thể, loại lịch thường 13:30 ngày thử; từ ngày mai lịch bình thường 08:00/13:30 được phép. Guard trước dependency/fetch/publish, xét trọn phút 17:30; từ 17:31 bỏ qua. GitHub job kiểm tra và Pages build có thể hoàn tất ngoài khung; không thể bảo đảm thời gian hoàn tất bên ngoài hệ thống. Trigger thêm chỉ ngày 7 tháng 10, policy chặn các năm khác. UI tự chọn mô tả lịch theo ngày bản tin. Job summary ghi event/cron/actual_time/allowed/reason. Chạy tay không được tính là lịch tự động; cần xem event=schedule và giờ tạo run để đánh giá. Không thay Windows Scheduler, không thêm token/dịch vụ trả phí.
+
+## Ràng buộc mới 07/10: không chạy bổ sung
+
+Chỉ cho event=schedule và run_attempt=1; không workflow_dispatch, không helper dispatch, rerun bị policy chặn trước fetch/publish. Giữ các mốc lịch đã thống nhất. Không dispatch để test cloud theo yêu cầu mới. PASS test guard không đồng nghĩa schedule đúng giờ; bộ lập lịch GitHub có thể trễ/bỏ qua. Các hướng dẫn chạy tay cloud trước đó là lịch sử và bị thay thế bởi ràng buộc này. Local tests vẫn chạy được.

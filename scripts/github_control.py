@@ -33,14 +33,11 @@ def authenticated_session():
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('action',choices=['status','dispatch','pages-status'])
+    parser.add_argument('action',choices=['status','pages-status'])
     args=parser.parse_args()
     session=authenticated_session()
     base='https://api.github.com/repos/'+REPOSITORY
-    if args.action=='dispatch':
-        response=session.post(base+'/actions/workflows/morning-news.yml/dispatches',json={'ref':'main'},timeout=30)
-        print('workflow_dispatch HTTP',response.status_code)
-    elif args.action=='pages-status':
+    if args.action=='pages-status':
         response=session.get(base+'/pages',timeout=30)
         print('Pages HTTP',response.status_code)
         if response.ok:

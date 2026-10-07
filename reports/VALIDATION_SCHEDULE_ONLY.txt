@@ -1,0 +1,8 @@
+RESULT: PARTIAL.
+Scheduled-only restriction implementation: PASS, 30 local tests PASS.
+Exact GitHub trigger timing: NOT GUARANTEED; 09:00 not triggered at 09:14 check.
+Remote verified: main default branch, not a fork, repository enabled, Actions enabled, workflow active, cron commits authored by matsepros-dot.
+Changes: workflow_dispatch removed; helper dispatch removed; policy requires schedule event and first run attempt.
+Existing hourly trial/window/next-day return retained. No extra cron, no manual recovery run.
+Cloud end-to-end validation intentionally not dispatched under latest user restriction.
+Prior manual success reports are historical evidence only.

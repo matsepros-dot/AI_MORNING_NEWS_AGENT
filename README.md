@@ -3,7 +3,7 @@
 Trang thông tin sống chạy trên GitHub Actions miễn phí: nguồn công khai → phân loại / pháp lý / độ mới / gộp chủ đề → HTML + snapshot + history → commit/push main → GitHub Pages. Không dùng OpenAI API hoặc dịch vụ trả phí. Không cần bật máy cá nhân.
 
 - Website: https://matsepros-dot.github.io/AI_MORNING_NEWS_AGENT/
-- Chạy tay: GitHub → Actions → Morning news V1.3 → Run workflow → main. Xem từng step và log ngay trong lần chạy.
+- GitHub chỉ chạy theo schedule; đã bỏ workflow_dispatch và chặn rerun theo yêu cầu không chạy bổ sung. Xem job summary/log trong Actions.
 - Lịch: `0 1 * * *` và `30 6 * * *` (08:00 và 13:30 Asia/Ho_Chi_Minh mỗi ngày). GitHub có thể khởi chạy trễ; đây là lịch cấu hình, không bảo đảm đúng từng phút.
 - Windows Task Scheduler cũ được ngừng dùng cho production; `scheduler/install_task.ps1` đã deprecated và không đăng ký task mới.
 - Sửa nguồn / keyword / thời gian lưu / điểm: `config/config.json`. RSS, HTML công khai và bài tham chiếu chính thống đều configurable. TVPL lỗi hoặc chặn truy cập sẽ chuyển sang nguồn Chính phủ; không vượt CAPTCHA/paywall.
@@ -24,3 +24,5 @@ V1.3: header sticky, menu mobile mở/đóng, chọn nhóm tin hiện tại, nú
 Website hiển thị lịch 08:00 và 13:30 cùng thời gian tạo bản tin gần nhất theo giờ Việt Nam. Thời gian hiển thị là lúc render sau khi lấy nguồn; có thể khác lịch dự kiến do GitHub chạy trễ hoặc chạy tay. Trang đang mở cần tải lại để thấy bản mới.
 
 Thử nghiệm riêng 07/10/2026: 08:00–17:00 mỗi giờ và 17:30; từ 08/10 trở lại 08:00/13:30. Cron 13:30 bị policy bỏ qua trong ngày thử. Workflow kiểm tra ngày/giờ trước cài dependency, trước fetch và trước publish; từ 17:31 không bắt đầu fetch/publish. GitHub vẫn có thể tạo job kiểm tra hoặc build Pages hoàn tất muộn. Schedule cron không có trường năm nên các trigger trial cùng ngày/tháng năm sau bị policy chặn. Thời gian check thực tế/event/cron và lý do bỏ qua có trong Actions job summary. Workflow_dispatch chỉ kiểm tra pipeline, không chứng minh schedule tự chạy; các mốc đã qua không chạy bù bằng schedule. Không bảo đảm đúng phút do lịch GitHub có thể trễ/bỏ qua.
+
+07/10: yêu cầu không chạy bổ sung — chỉ chấp nhận event=schedule với GITHUB_RUN_ATTEMPT=1. Bỏ workflow_dispatch và lệnh dispatch trong helper. Không thay các mốc cron, không chạy bù để xác minh. Những lần chạy tay trong báo cáo trước là bằng chứng lịch sử, hiện không còn được phép qua workflow này. Code không thể bảo đảm bộ lập lịch GitHub kích hoạt đúng phút; kết quả kiểm chứng đúng giờ vẫn chưa đạt.

@@ -1,4 +1,3 @@
-import copy
 import json
 import unittest
 from datetime import datetime, timezone, timedelta
@@ -36,6 +35,14 @@ class SchedulePolicyTests(unittest.TestCase):
         for day in (6, 8):
             self.assertFalse(self.check(day, 9, 0))
         self.assertFalse(eligibility(CONFIG, datetime(2027, 10, 7, 9, tzinfo=VN), 'schedule', '0 2-10 7 10 *')[0])
+
+    def test_supplemental_events_and_reruns_rejected(self):
+        now = datetime(2026, 10, 7, 10, tzinfo=VN)
+        for event in ('workflow_dispatch', 'repository_dispatch', 'push', ''):
+            self.assertFalse(eligibility(CONFIG, now, event, '0 2-10 7 10 *')[0])
+        self.assertFalse(eligibility(CONFIG, now, 'schedule', '0 2-10 7 10 *', attempt=2)[0])
+        tomorrow = datetime(2026, 10, 8, 8, tzinfo=VN)
+        self.assertFalse(eligibility(CONFIG, tomorrow, 'workflow_dispatch')[0])
 
     def test_utc_conversion_and_unknown_schedule(self):
         self.assertTrue(eligibility(CONFIG, datetime(2026, 10, 7, 1, tzinfo=timezone.utc), 'schedule', '0 1 * * *')[0])

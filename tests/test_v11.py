@@ -163,7 +163,7 @@ class V11Tests(unittest.TestCase):
         triggers = value.get('on',value.get(True))
         self.assertEqual([entry['cron'] for entry in triggers['schedule']], ['0 1 * * *', '30 6 * * *', '0 2-10 7 10 *', '30 10 7 10 *'])
         self.assertEqual(CONFIG['scheduler_times'], ['08:00', '13:30'])
-        self.assertIn('workflow_dispatch',triggers)
+        self.assertNotIn('workflow_dispatch',triggers)
         self.assertEqual(value['permissions'],{'contents':'write'})
         self.assertEqual(value['jobs']['update-news']['runs-on'],'ubuntu-latest')
         self.assertFalse(value['concurrency']['cancel-in-progress'])

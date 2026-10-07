@@ -10,7 +10,11 @@ NORMAL_CRONS = {'0 1 * * *', '30 6 * * *'}
 TRIAL_CRONS = {'0 2-10 7 10 *', '30 10 7 10 *'}
 
 
-def eligibility(config, now, event, cron=''):
+def eligibility(config, now, event, cron='', attempt=1):
+    if event != 'schedule':
+        return False, 'Only automatic scheduled events allowed; supplemental runs disabled'
+    if attempt != 1:
+        return False, 'Reruns disabled; no fetch or publish'
     now = now.astimezone(VIETNAM)
     trial = config['schedule_trial']
     trial_day = now.date().isoformat() == trial['date']
@@ -25,8 +29,8 @@ def eligibility(config, now, event, cron=''):
             return False, 'Outside trial window; no fetch or publish'
         if event == 'schedule' and cron == '30 6 * * *':
             return False, '13:30 normal run suppressed during hourly trial'
-        return True, 'One-day trial window (manual runs are not schedule evidence)'
-    return True, 'Normal schedule or authorized manual run'
+        return True, 'One-day automatic trial window'
+    return True, 'Normal automatic schedule'
 
 
 def main():
@@ -36,7 +40,7 @@ def main():
     event = os.environ.get('GITHUB_EVENT_NAME', 'workflow_dispatch')
     now = datetime.now(VIETNAM)
     cron = payload.get('schedule', '')
-    allowed, reason = eligibility(config, now, event, cron)
+    allowed, reason = eligibility(config, now, event, cron, int(os.environ.get('GITHUB_RUN_ATTEMPT', '1')))
     result = dict(allowed=allowed, reason=reason, event=event, cron=cron, actual_time=now.isoformat())
     print(json.dumps(result, ensure_ascii=True))
     output = os.environ.get('GITHUB_OUTPUT')
