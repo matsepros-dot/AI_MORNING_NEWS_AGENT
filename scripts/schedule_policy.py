@@ -7,7 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 VIETNAM = timezone(timedelta(hours=7))
 NORMAL_CRONS = {'0 1 * * *', '30 6 * * *'}
-TRIAL_CRONS = {'0 2-10 7 10 *', '30 10 7 10 *'}
+TRIAL_CRONS = {'0 2-10 7 10 *', '30 1-5,7-10 7 10 *'}
 
 
 def eligibility(config, now, event, cron='', attempt=1):
@@ -27,8 +27,6 @@ def eligibility(config, now, event, cron='', attempt=1):
         clock = now.strftime('%H:%M')
         if not trial['start'] <= clock <= trial['end']:
             return False, 'Outside trial window; no fetch or publish'
-        if event == 'schedule' and cron == '30 6 * * *':
-            return False, '13:30 normal run suppressed during hourly trial'
         return True, 'One-day automatic trial window'
     return True, 'Normal automatic schedule'
 

@@ -5,10 +5,11 @@ on:
     # UTC: 01:00 = 08:00 and 06:30 = 13:30 in Vietnam (UTC+07:00).
     - cron: '0 1 * * *'
     - cron: '30 6 * * *'
-    # One-day trial: 09:00-17:00 hourly and 17:30; 08:00 uses normal cron.
+    # One-day trial: every 30 minutes, 08:00-17:30 Vietnam.
+    # Normal crons supply 08:00 and 13:30; extra crons exclude these slots.
     # Policy rejects these extra triggers on every date except 2026-10-07.
     - cron: '0 2-10 7 10 *'
-    - cron: '30 10 7 10 *'
+    - cron: '30 1-5,7-10 7 10 *'
 
 permissions:
   contents: write

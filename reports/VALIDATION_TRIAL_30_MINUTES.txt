@@ -1,0 +1,9 @@
+RESULT: PARTIAL (automatic timing not yet verified).
+Implementation: PASS; 30 unit tests PASS; git diff --check PASS.
+Date: 2026-10-07 Vietnam; every 30 minutes from 08:00 through 17:30.
+Cron expansion verified: 20 unique slots; no duplicates or planned slots outside window.
+Normal 08:00 and 13:30 crons reused; remaining slots supplied by date-specific crons.
+Exact-date guard prevents extra updates after trial day; tomorrow normal 08:00/13:30.
+No workflow_dispatch, rerun updates, manual recovery or retroactive missed-slot execution.
+Existing public HTML schedule label updated only; news and actual-update timestamp retained.
+Cloud pipeline deliberately not dispatched due user restriction; future schedule evidence pending.

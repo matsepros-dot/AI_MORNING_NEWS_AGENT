@@ -18,15 +18,17 @@ class SchedulePolicyTests(unittest.TestCase):
         self.assertTrue(self.check(7, 8, 0, cron='0 1 * * *'))
         for hour in range(9, 18):
             self.assertTrue(self.check(7, hour, 0))
-        self.assertTrue(self.check(7, 17, 30, cron='30 10 7 10 *'))
+        for hour in range(8, 18):
+            cron = '30 6 * * *' if hour == 13 else '30 1-5,7-10 7 10 *'
+            self.assertTrue(self.check(7, hour, 30, cron=cron))
 
     def test_boundaries_and_delayed_publish_rejected(self):
         for hour, minute in [(7, 59), (17, 31), (18, 0)]:
             self.assertFalse(self.check(7, hour, minute))
             self.assertFalse(self.check(7, hour, minute, event='workflow_dispatch'))
 
-    def test_normal_afternoon_suppressed_only_today(self):
-        self.assertFalse(self.check(7, 13, 30, cron='30 6 * * *'))
+    def test_normal_slots_work_during_trial_and_after(self):
+        self.assertTrue(self.check(7, 13, 30, cron='30 6 * * *'))
         for day in (8, 9):
             self.assertTrue(self.check(day, 13, 30, cron='30 6 * * *'))
             self.assertTrue(self.check(day, 8, 0, cron='0 1 * * *'))

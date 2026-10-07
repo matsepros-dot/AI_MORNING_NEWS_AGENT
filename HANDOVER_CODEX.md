@@ -212,3 +212,7 @@ Theo yêu cầu người dùng: mỗi giờ 08:00–17:00, thêm 17:30. scripts/
 ## Ràng buộc mới 07/10: không chạy bổ sung
 
 Chỉ cho event=schedule và run_attempt=1; không workflow_dispatch, không helper dispatch, rerun bị policy chặn trước fetch/publish. Giữ các mốc lịch đã thống nhất. Không dispatch để test cloud theo yêu cầu mới. PASS test guard không đồng nghĩa schedule đúng giờ; bộ lập lịch GitHub có thể trễ/bỏ qua. Các hướng dẫn chạy tay cloud trước đó là lịch sử và bị thay thế bởi ràng buộc này. Local tests vẫn chạy được.
+
+## Lịch thử mới nhất — mỗi 30 phút ngày 07/10/2026
+
+Theo yêu cầu mới, thay lịch mỗi giờ bằng 08:00,08:30,...,17:00,17:30 hôm nay. Cron thường cấp 08:00/13:30; cron ngày 7 tháng 10 bổ sung giờ chẵn 09–17 và phút30 các giờ còn lại. Không trùng slot, không chạy bù/dispatch/rerun. Giữ guard ngày/window, từ 08/10 trở lại 08:00/13:30. HTML hiện có chỉ sửa nhãn lịch, giữ nguyên timestamp và nội dung tin. Lịch mới thay thế thông tin thử mỗi giờ và chặn 13:30 ở mục trước. Các mốc tương lai chưa có bằng chứng chạy tự động.
