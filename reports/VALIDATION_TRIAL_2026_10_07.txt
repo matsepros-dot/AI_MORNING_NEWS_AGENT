@@ -1,0 +1,17 @@
+RESULT: PARTIAL (trial day has not finished; automatic schedule timing unverified).
+Implementation/tests/manual cloud validation: PASS.
+Trial date: 2026-10-07, Vietnam UTC+07:00.
+Planned slots: 08:00,09:00,10:00,11:00,12:00,13:00,14:00,15:00,16:00,17:00,17:30.
+Deployment before 09:00. The 08:00 slot was already past and had no recorded scheduled run at the earlier check.
+Normal 13:30 schedule suppressed on trial date; from 2026-10-08 normal 08:00/13:30 restored by policy.
+Gate checked before dependency setup, fetch, publish; from 17:31 no fetch/publish starts.
+Whole final 17:30 minute accepted. Jobs already active and Pages builds can complete later.
+Extra cron events in later years are rejected by exact-date guard.
+Local: 29 tests PASS, git diff --check PASS.
+Cloud manual validation run: https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37559037115
+Both policy and update jobs successful, including tests/window checks/pipeline/publish.
+Pages built cloud commit eba6cea2d690657a6673d73e44474060c7392b12.
+Public website shows trial schedule and actual update 2026-10-07T08:50:54.124111+07:00.
+Manual workflow_dispatch does not establish automatic schedule reliability.
+To evaluate: Actions event=schedule; compare created_at/run_started_at (UTC+7), job policy summary actual time, update/publish outcome, and public timestamp.
+All remaining clock slots pending at validation; no claim of future success.
