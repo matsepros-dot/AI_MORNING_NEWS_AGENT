@@ -216,3 +216,7 @@ Chỉ cho event=schedule và run_attempt=1; không workflow_dispatch, không hel
 ## Lịch thử mới nhất — mỗi 30 phút ngày 07/10/2026
 
 Theo yêu cầu mới, thay lịch mỗi giờ bằng 08:00,08:30,...,17:00,17:30 hôm nay. Cron thường cấp 08:00/13:30; cron ngày 7 tháng 10 bổ sung giờ chẵn 09–17 và phút30 các giờ còn lại. Không trùng slot, không chạy bù/dispatch/rerun. Giữ guard ngày/window, từ 08/10 trở lại 08:00/13:30. HTML hiện có chỉ sửa nhãn lịch, giữ nguyên timestamp và nội dung tin. Lịch mới thay thế thông tin thử mỗi giờ và chặn 13:30 ở mục trước. Các mốc tương lai chưa có bằng chứng chạy tự động.
+
+## Chẩn đoán lịch 07/10/2026
+
+Đã thêm scripts/check_schedule.py chỉ dùng GET GitHub API và GET website; không dispatch, retry, fetch tin hoặc publish. Báo cáo status/boundary, cấu hình remote, workflow active, số run schedule trong ngày, Pages commit, timestamp công khai và mốc lịch hiện tại. Credentials dùng GCM trong RAM, không in/lưu. Báo cáo reports/schedule_diagnostic.json/md được ghi khi chạy checker; không có monitor nền. 37 tests PASS. Kiểm tra thật 10:10:39+07:00: FAIL NO_SCHEDULE_EVENT_OBSERVED, zero schedule events, trang vẫn08:50. Đây là ranh giới lỗi quan sát được, chưa phải nguyên nhân nội bộ GitHub. Các slot quá khứ hiển thị theo config hiện tại, không suy ra config đã tồn tại tại slot đó. Chạy tay vẫn chặn; không thay mốc hoặc thêm trigger. Độ chính xác lịch không thể bảo đảm bằng code repo.
