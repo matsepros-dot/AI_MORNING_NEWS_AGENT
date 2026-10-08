@@ -1,108 +1,18 @@
 {
-  "status": "PARTIAL",
-  "boundary": "SCHEDULE_TIMING_UNCONFIRMED",
-  "checked_at": "2026-10-07T17:56:29.840118+07:00",
+  "status": "FAIL",
+  "boundary": "ALL_SCHEDULED_UPDATES_SKIPPED",
+  "checked_at": "2026-10-08T08:40:40.618279+07:00",
   "public_update": "2026-10-07T17:30:09.533420+07:00",
-  "scheduled_runs_today": 2,
+  "scheduled_runs_today": 1,
   "slots": [
     {
-      "planned": "2026-10-07T08:00:00+07:00",
+      "planned": "2026-10-08T08:00:00+07:00",
       "status": "NO_ON_TIME_RUN_OBSERVED",
       "run_ids": []
     },
     {
-      "planned": "2026-10-07T08:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T09:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T09:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T10:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T10:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T11:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T11:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T12:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T12:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T13:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T13:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T14:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T14:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T15:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T15:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T16:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T16:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T17:00:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
-      "run_ids": []
-    },
-    {
-      "planned": "2026-10-07T17:30:00+07:00",
-      "status": "NO_ON_TIME_RUN_OBSERVED",
+      "planned": "2026-10-08T13:30:00+07:00",
+      "status": "PENDING",
       "run_ids": []
     }
   ],
@@ -113,24 +23,35 @@
     "actions_enabled": true,
     "remote_matches": true,
     "pages_status": "built",
-    "pages_commit": "21d4184d95923de2d8e02def00e27fb1b4a6c8f7",
+    "pages_commit": "344ef862d7b1a417436fb150c87f5d3e07d4d8e8",
     "job_outcomes": {
-      "37609557263": {
+      "37659697386": {
         "jobs": {
           "schedule-policy": "success",
           "update-news": "skipped"
         },
         "published": false
-      },
-      "37607710402": {
-        "jobs": {
-          "schedule-policy": "success",
-          "update-news": "success"
-        },
-        "published": true
       }
     },
     "runs": [
+      {
+        "id": 37659697386,
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-07T17:31:14Z",
+        "run_started_at": "2026-10-07T17:31:14Z",
+        "html_url": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37659697386"
+      },
+      {
+        "id": 37631208405,
+        "event": "schedule",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-07T13:46:38Z",
+        "run_started_at": "2026-10-07T13:46:38Z",
+        "html_url": "https://github.com/matsepros-dot/AI_MORNING_NEWS_AGENT/actions/runs/37631208405"
+      },
       {
         "id": 37609557263,
         "event": "schedule",

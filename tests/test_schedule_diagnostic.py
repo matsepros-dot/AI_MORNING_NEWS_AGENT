@@ -53,6 +53,13 @@ class ScheduleDiagnosticTests(unittest.TestCase):
         self.assertEqual(result['status'],'PARTIAL')
         self.assertNotEqual(result['boundary'],'PUBLIC_PAGE_OLDER_THAN_SUCCESSFUL_RUN')
 
+    def test_expired_trial_arriving_next_day_does_not_count_as_update(self):
+        runs = [dict(id=1,event='schedule',created_at='2026-10-07T17:31:14Z',conclusion='success')]
+        outcomes = {1:{'published':False,'jobs':{'schedule-policy':'success','update-news':'skipped'}}}
+        result = assess(CONFIG,datetime(2026,10,8,8,39,tzinfo=VN),runs,'2026-10-07T17:30:09+07:00',job_outcomes=outcomes)
+        self.assertEqual(result['status'],'FAIL')
+        self.assertEqual(result['boundary'],'ALL_SCHEDULED_UPDATES_SKIPPED')
+
     def test_disabled_workflow_reported_as_configuration(self):
         result = assess(CONFIG, datetime(2026, 10, 7, 9, 11, tzinfo=VN), [], None, 'disabled_manually')
         self.assertEqual(result['boundary'], 'WORKFLOW_CONFIGURATION')

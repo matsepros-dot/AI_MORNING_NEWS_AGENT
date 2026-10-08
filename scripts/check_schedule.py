@@ -50,6 +50,9 @@ def assess(config, now, runs, page_time, workflow_state='active', config_matches
         status, boundary = 'FAIL', 'NO_SCHEDULE_EVENT_OBSERVED'
     elif any(r.get('conclusion') in ('failure', 'cancelled', 'timed_out') for r in scheduled):
         status, boundary = 'FAIL', 'SCHEDULED_RUN_FAILED'
+    elif due and scheduled and job_outcomes is not None and all(
+            job_outcomes.get(r['id'], {}).get('jobs', {}).get('update-news') == 'skipped' for r in scheduled):
+        status, boundary = 'FAIL', 'ALL_SCHEDULED_UPDATES_SKIPPED'
     elif page_time:
         successes = [r for r in scheduled if r.get('conclusion') == 'success'
                      and (job_outcomes is None or job_outcomes.get(r['id'], {}).get('published') is True)]

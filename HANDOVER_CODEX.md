@@ -228,3 +228,7 @@ Người dùng đã đồng ý thử dịch vụ thay cron. Workflow external-ne
 ## Kết quả tự động cuối ngày07/10
 
 Đã có run schedule37607710402 tạo17:29:14, publish thực sự success, website17:30:09; run37609557263 tạo17:45:57 bị guard bỏ qua update job. Tổng thể PARTIAL: end-to-end tự động PASS, đúng giờ FAIL; cronjob vẫnstandby. Checker sửa false alarm do workflow success nhưngupdate-news skipped;46 tests PASS. Xem reports/VALIDATION_AUTOMATIC_FINAL_2026_10_07.md. Không chứng minh cron đã hỏng vĩnh viễn hoặc khôi phục lịch đúng phút. Automation theo dõi dừng theo điều kiện có bằng chứng end-to-end.
+
+## Kiểm tra sáng08/10/2026
+
+08:40+07 website vẫn17:30 ngày07/10. Event ngày08/10 thực tế00:31 làtrial cũ đếnmuộn, bịguard expired, update-news skipped. Event cron13:30 ngày07/10 đến20:46 bịchặnngoàikhung. Chưa có run cập nhật mốc08:00. Checker sửa báoFAIL khi tất cả scheduled update jobs skipped;47 tests PASS. Không thay lịch và không chạy bù. Xem reports/INCIDENT_SCHEDULE_2026_10_08.md. cronjob ngoài vẫnstandby, chưa có credential đượcủyquyền hoặc jobđãkíchhoạt.
